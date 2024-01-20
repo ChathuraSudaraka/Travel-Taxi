@@ -107,6 +107,12 @@ function copy() {
           </div>
           <!-- Trid ID End -->
 
+          <!-- Flight number Start -->
+          <div class="col-span-12 md:col-span-12 lg:col-span-6">
+            <PrimaryInput label="Flight number" placeholder="Enter Flight No" />
+          </div>
+          <!-- Flight number End -->
+
           <!-- Trip Date & Time Start -->
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
             <PrimaryInput label="Date" type="date" v-model="form.date" />
@@ -118,7 +124,7 @@ function copy() {
 
           <!-- Passengers Start -->
           <div
-            class="col-span-12 md:col-span-6 lg:col-span-4 grid grid-cols-2 gap-3"
+            class="col-span-12 md:col-span-6 lg:col-span-6 grid grid-cols-2 gap-3"
           >
             <div class="col-span-1">
               <PrimaryInput
@@ -142,7 +148,7 @@ function copy() {
           <!-- Passengers End -->
 
           <!-- Vehicle Type Start -->
-          <div class="col-span-6 md:col-span-6 lg:col-span-4 flex flex-col">
+          <div class="col-span-6 md:col-span-6 lg:col-span-6 flex flex-col">
             <PrimarySelect
               label="Vehicle Type"
               placeholder="Select Vehicle Type"
@@ -153,7 +159,7 @@ function copy() {
           <!-- Vehicle Type End -->
 
           <!-- Baggages Start -->
-          <div class="col-span-6 md:col-span-12 lg:col-span-4">
+          <div class="col-span-6 md:col-span-12 lg:col-span-6">
             <PrimaryInput
               label="Baggages"
               placeholder="Enter Baggages"
@@ -188,7 +194,7 @@ function copy() {
           <!-- Location End -->
 
           <!-- Surfboard Start -->
-          <div class="col-span-12 md:col-span-4">
+          <div class="col-span-12 md:col-span-3">
             <label for="surfboard" class="label text-sm uppercase"
               >Surfboard</label
             >
@@ -217,7 +223,7 @@ function copy() {
           <!-- Distance End -->
 
           <!-- Time Start -->
-          <div class="col-span-12 md:col-span-5">
+          <div class="col-span-12 md:col-span-6">
             <label for="time" class="label uppercase text-sm"
               >Transport Time</label
             >
