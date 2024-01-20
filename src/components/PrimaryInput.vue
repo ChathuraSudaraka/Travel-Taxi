@@ -8,7 +8,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    required: true,
+    required: false,
   },
   type: {
     type: String,
@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const isMessure = computed(() => {
@@ -52,11 +56,13 @@ const isMessure = computed(() => {
         :type="type"
         :placeholder="placeholder"
         :inputmode="keyboard"
-        :modelValue="modelValue"
-        class="input input-bordered w-full"
+        :value="modelValue"
+        @input="$emit('update:modelValue', $event.target.value)"
+        class="input input-bordered w-full disabled:cursor-pointer disabled:text-gray-500 dark:disabled:text-gray-400"
         :class="{
           'pr-12': isMessure,
         }"
+        :disabled="disabled"
       />
       <div
         v-if="isMessure"
@@ -70,3 +76,4 @@ const isMessure = computed(() => {
     </div>
   </label>
 </template>
+

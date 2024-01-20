@@ -4,7 +4,7 @@ import { onMounted } from "vue";
 
 onMounted(() => {
   const loader = new Loader({
-    apiKey: "AIzaSyA6V0NipdSMqQPOZNGknFEsFhx_W5ytu2s",
+    apiKey: "AIzaSyAbohbtygYyq9eKq0zVq0VWNZJuEsjf48c",
     version: "weekly",
   });
 

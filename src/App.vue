@@ -5,7 +5,7 @@ import PrimarySelect from "@/components/PrimarySelect.vue";
 import MapModal from "@/components/MapModal.vue";
 
 import { useDark } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const isDark = useDark();
 const vehicles = [
@@ -26,13 +26,47 @@ const vehicles = [
   "Electric Scooter",
 ];
 
+const trip_id_start = ref("");
+const form = {
+  tripId: "",
+  date: "",
+  time: "",
+  adults: "",
+  children: "",
+  vehicleType: "",
+  baggages: "",
+  pickupLocation: "",
+  dropLocation: "",
+  surfboard: "",
+  distance: "",
+  transportTimeH: "",
+  transportTimeM: "",
+};
+
+onMounted(() => {
+  trip_id_start.value = generateUniqueId();
+});
+
 const theme = computed(() => {
   return isDark.value ? "dark" : "light";
 });
 
+function generateUniqueId() {
+  const timestamp = new Date();
+  const date = timestamp.getDate();
+  const month = timestamp.getMonth() + 1;
+  const year = timestamp.getFullYear();
+
+  return `${year}${month}${date}`;
+}
+
 function showMap() {
   const mapModal = document.getElementById("map_modal");
   mapModal.showModal();
+}
+
+function copy() {
+  console.log(form);
 }
 </script>
 
@@ -48,16 +82,37 @@ function showMap() {
         <div class="grid grid-cols-12 gap-3">
           <!-- Trid ID Start -->
           <div class="col-span-12 lg:col-span-6">
-            <PrimaryInput label="Trip ID" placeholder="Enter The Trip ID" />
+            <label class="form-control w-full">
+              <div class="label uppercase">
+                <span class="label-text">Trip ID</span>
+              </div>
+              <div class="grid grid-cols-12">
+                <div
+                  class="col-span-5 md:col-span-4 lg:col-span-3 input-bordered border-r-0 flex justify-center items-center bg-gray-200 dark:bg-[#1d232a] rounded-l-lg"
+                >
+                  <span class="font-bold">
+                    {{ trip_id_start }}
+                  </span>
+                </div>
+                <div class="col-span-7 md:col-span-8 lg:col-span-9">
+                  <input
+                    type="text"
+                    placeholder="Enter The Trip ID"
+                    class="input input-bordered border-l-0 rounded-l-none w-full"
+                    v-model="form.tripId"
+                  />
+                </div>
+              </div>
+            </label>
           </div>
           <!-- Trid ID End -->
 
           <!-- Trip Date & Time Start -->
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
-            <PrimaryInput label="Date" type="date" />
+            <PrimaryInput label="Date" type="date" v-model="form.date" />
           </div>
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
-            <PrimaryInput label="Time" type="time" />
+            <PrimaryInput label="Time" type="time" v-model="form.time" />
           </div>
           <!-- Trid Date & Time end -->
 
@@ -71,6 +126,7 @@ function showMap() {
                 label="Adults"
                 placeholder="Adults Count"
                 keyboard="numeric"
+                v-model="form.adults"
               />
             </div>
             <div class="col-span-1">
@@ -79,6 +135,7 @@ function showMap() {
                 label="Children"
                 placeholder="Children Count"
                 keyboard="numeric"
+                v-model="form.children"
               />
             </div>
           </div>
@@ -90,28 +147,43 @@ function showMap() {
               label="Vehicle Type"
               placeholder="Select Vehicle Type"
               :options="vehicles"
+              v-model="form.vehicleType"
             />
           </div>
           <!-- Vehicle Type End -->
 
           <!-- Baggages Start -->
           <div class="col-span-6 md:col-span-12 lg:col-span-4">
-            <PrimaryInput label="Baggages" placeholder="Enter Baggages" />
+            <PrimaryInput
+              label="Baggages"
+              placeholder="Enter Baggages"
+              v-model="form.baggages"
+            />
           </div>
           <!-- Baggages Start -->
 
           <!-- Location Start -->
           <div class="col-span-12 md:col-span-6">
-            <PrimaryInput
-              label="Pickup Location"
-              placeholder="Enter Pickup Location"
-            />
+            <label class="form-control w-full">
+              <div class="label uppercase">
+                <span class="label-text">Pickup location</span>
+              </div>
+              <div
+                @click="showMap"
+                class="w-full h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              ></div>
+            </label>
           </div>
           <div class="col-span-12 md:col-span-6">
-            <PrimaryInput
-              label="Drop Location"
-              placeholder="Enter Drop Location"
-            />
+            <label class="form-control w-full">
+              <div class="label uppercase">
+                <span class="label-text">Drop location</span>
+              </div>
+              <div
+                @click="showMap"
+                class="w-full h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              ></div>
+            </label>
           </div>
           <!-- Location End -->
 
@@ -122,11 +194,11 @@ function showMap() {
             >
             <div class="grid grid-cols-2 place-items-center">
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" />
+                <input type="radio" name="surfboard" class="radio" v-model="form.surfboard" />
                 <label for="yes">Yes</label>
               </div>
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" checked />
+                <input type="radio" name="surfboard" class="radio" checked v-model="form.surfboard" />
                 <label for="yes">No</label>
               </div>
             </div>
@@ -139,6 +211,7 @@ function showMap() {
               label="Total Distance"
               placeholder="Enter The Distance"
               messure="KM"
+              v-model="form.distance"
             />
           </div>
           <!-- Distance End -->
@@ -155,6 +228,7 @@ function showMap() {
                   placeholder="Hours"
                   keyboard="numeric"
                   messure="H"
+                  v-model="form.transportTimeH"
                 />
               </div>
               <div class="col-span-1">
@@ -163,6 +237,7 @@ function showMap() {
                   placeholder="Minutes"
                   keyboard="numeric"
                   messure="M"
+                  v-model="form.transportTimeM"
                 />
               </div>
             </div>
@@ -175,7 +250,7 @@ function showMap() {
           >
             <button class="btn btn-error order-3 md:order-1">Reset</button>
             <button class="btn btn-primary order-2">Print</button>
-            <button class="btn btn-neutral order-1 md:order-3" @click="showMap">
+            <button class="btn btn-neutral order-1 md:order-3" @click="copy">
               <v-icon name="md-contentcopy-round" />
               Copy To Clipboard
             </button>
@@ -184,10 +259,9 @@ function showMap() {
         </div>
       </div>
     </div>
+    <MapModal />
+    <ToggleTheme />
   </div>
-  <MapModal />
-
-  <ToggleTheme />
 </template>
 
 <style scoped></style>

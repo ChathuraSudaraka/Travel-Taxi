@@ -38,6 +38,7 @@ defineProps({
       <span class="label-text-alt">{{ hint }}</span>
     </div>
     <select
+      @change="$emit('update:modelValue', $event.target.value)"
       class="select select-bordered"
     >
       <option disabled selected>{{ placeholder }}</option>
