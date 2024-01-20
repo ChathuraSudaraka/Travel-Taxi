@@ -6,12 +6,7 @@ export default {
   ],
   darkMode: 'class',
   theme: {
-    extend: {
-      colors: {
-        'primary-dark': '#0f172a',
-        'secondary-dark': '#090e1a',
-      }
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
