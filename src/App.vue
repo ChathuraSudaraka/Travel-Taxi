@@ -9,21 +9,21 @@ import { computed } from "vue";
 
 const isDark = useDark();
 const vehicles = [
-  'Car',
-  'Truck',
-  'Motorcycle',
-  'Bicycle',
-  'Bus',
-  'Scooter',
-  'Boat',
-  'Airplane',
-  'Helicopter',
-  'Train',
-  'Subway',
-  'RV',
-  'Jet Ski',
-  'Quad Bike',
-  'Electric Scooter',
+  "Car",
+  "Truck",
+  "Motorcycle",
+  "Bicycle",
+  "Bus",
+  "Scooter",
+  "Boat",
+  "Airplane",
+  "Helicopter",
+  "Train",
+  "Subway",
+  "RV",
+  "Jet Ski",
+  "Quad Bike",
+  "Electric Scooter",
 ];
 
 const theme = computed(() => {
@@ -33,29 +33,27 @@ const theme = computed(() => {
 
 <template>
   <div
-    class="flex min-h-screen justify-center bg-gray-100 dark:bg-[#141414]"
+    class="flex min-h-screen justify-center bg-gray-100 dark:bg-[#141414] bg-[url(/img/1.png)] bg-cover bg-left-bottom"
     :data-theme="theme"
   >
     <div class="container p-5 pt-10">
       <div
-        class="p-5 md:p-8 lg:p-10 rounded-lg shadow-lg bg-gray-50 dark:bg-gray-950 dark:shadow-black"
+        class="p-5 md:p-8 lg:p-10 rounded-lg shadow-lg bg-[#f8fafc99] dark:bg-[#0f0f12e3] dark:shadow-black"
       >
         <div class="grid grid-cols-12 gap-3">
           <div class="col-span-12 lg:col-span-6">
-            <PrimaryInput label="Trip ID" placeholder="Enter your First Name" />
+            <PrimaryInput label="Trip ID" placeholder="Enter The Trip ID" />
           </div>
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
             <PrimaryInput
               label="Date"
               type="date"
-              placeholder="Enter your Last Name"
             />
           </div>
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
             <PrimaryInput
               label="Time"
               type="time"
-              placeholder="Enter your Last Name"
             />
           </div>
           <div
