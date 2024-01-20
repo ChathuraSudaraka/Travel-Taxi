@@ -20,9 +20,9 @@ const bgImage = computed(() => {
 
 <style scoped>
 .fixed {
-  width: 80px;
+  width: 70px;
   height: 60px;
-  top: 120px;
+  top: 50px;
   right: 0;
   border-radius: 30px 0 0 30px;
   padding: 5px;
