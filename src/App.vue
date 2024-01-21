@@ -5,30 +5,21 @@ import PrimarySelect from "@/components/PrimarySelect.vue";
 import MapModal from "@/components/MapModal.vue";
 
 import { useDark } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const isDark = useDark();
 const vehicles = [
-  "Car",
-  "Truck",
-  "Motorcycle",
-  "Bicycle",
+  "Mini Car",
+  "Sedan Car",
+  "Buddy Van",
+  "Van F/R",
+  "Van H/R",
   "Bus",
-  "Scooter",
-  "Boat",
-  "Airplane",
-  "Helicopter",
-  "Train",
-  "Subway",
-  "RV",
-  "Jet Ski",
-  "Quad Bike",
-  "Electric Scooter",
 ];
 
 const copy_icon = ref("md-contentcopy-round");
 const trip_id_start = ref("");
-const form = {
+const form = ref({
   tripId: "",
   date: "",
   time: "",
@@ -38,11 +29,28 @@ const form = {
   baggages: "",
   pickupLocation: "",
   dropLocation: "",
-  surfboard: "",
+  surfboard: "Not Available",
   distance: "",
   transportTimeH: "",
   transportTimeM: "",
-};
+});
+const pickupLocationUrl = ref("");
+const dropLocationUrl = ref("");
+
+watch(
+  [() => form.value.pickupLocation, () => form.value.dropLocation],
+  (
+    [pickupLocationOld, dropLocationOld],
+    [pickupLocationNew, dropLocationNew]
+  ) => {
+    if (
+      pickupLocationOld !== pickupLocationNew ||
+      dropLocationOld !== dropLocationNew
+    ) {
+      calcRoute();
+    }
+  }
+);
 
 onMounted(() => {
   trip_id_start.value = generateUniqueId();
@@ -61,14 +69,11 @@ function generateUniqueId() {
   return `${year}${month}${date}`;
 }
 
-function showMap() {
-  const mapModal = document.getElementById("map_modal");
-  mapModal.showModal();
-}
+const pickup_modal = ref(false);
+const drop_modal = ref(false);
 
 function copy() {
-  console.log(form);
-  let form_copy = { ...form };
+  let form_copy = { ...form.value };
   let keys = Object.keys(form_copy);
   keys.forEach((key) => {
     if (form_copy[key] === "") {
@@ -76,24 +81,66 @@ function copy() {
     }
   });
   const text = `
-  Trip ID: ${trip_id_start.value}${form_copy.tripId}
-  Date: ${form_copy.date}
-  Time: ${form_copy.time}
-  Adults: ${form_copy.adults}
-  Children: ${form_copy.children}
-  Vehicle Type: ${form_copy.vehicleType}
-  Baggages: ${form_copy.baggages}
-  Pickup Location: ${form_copy.pickupLocation}
-  Drop Location: ${form_copy.dropLocation}
-  Surfboard: ${form_copy.surfboard}
-  Distance: ${form_copy.distance}
-  Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
+Trip ID: ${trip_id_start.value}${form_copy.tripId}
+Date: ${form_copy.date}
+Time: ${form_copy.time}\n
+Adults: ${form_copy.adults}
+Children: ${form_copy.children}
+Surfboard: ${form_copy.surfboard}
+Baggages: ${form_copy.baggages}
+Vehicle Type: ${form_copy.vehicleType}\n
+Pickup Location: ${pickupLocationUrl.value ? pickupLocationUrl.value : "N/A"}
+Drop Location: ${dropLocationUrl.value ? dropLocationUrl.value : "N/A"}\n
+Distance: ${form_copy.distance}KM
+Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
   `;
   navigator.clipboard.writeText(text);
   copy_icon.value = "bi-check-circle";
   setTimeout(() => {
     copy_icon.value = "md-contentcopy-round";
   }, 1500);
+}
+
+async function calcRoute() {
+  if (form.value.pickupLocation === "" || form.value.dropLocation === "") {
+    return;
+  }
+  const directionsService = new google.maps.DirectionsService();
+  await directionsService.route(
+    {
+      origin: form.value.pickupLocation,
+      destination: form.value.dropLocation,
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+    },
+    (response, status) => {
+      if (status === "OK") {
+        const distance = response.routes[0].legs[0].distance.text;
+        const duration = response.routes[0].legs[0].duration.text;
+        form.value.distance = (parseInt(distance) * 1.60934).toString();
+        const time = duration.split(" ");
+        if (time.length > 2) {
+          form.value.transportTimeH = time[0];
+          form.value.transportTimeM = time[2];
+        } else {
+          form.value.transportTimeH = "0";
+          form.value.transportTimeM = time[0];
+        }
+      } else {
+        alert("Directions request failed due to " + status);
+      }
+    }
+  );
+}
+
+function setPickupLocation(location) {
+  form.value.pickupLocation = location.place;
+  pickupLocationUrl.value = location.url;
+}
+
+function setDropLocation(location) {
+  form.value.dropLocation = location.place;
+  dropLocationUrl.value = location.url;
 }
 </script>
 
@@ -202,9 +249,11 @@ function copy() {
                 <span class="label-text">Pickup location</span>
               </div>
               <div
-                @click="showMap"
-                class="w-full h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
-              ></div>
+                @click="pickup_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
+                {{ form.pickupLocation }}
+              </div>
             </label>
           </div>
           <div class="col-span-12 md:col-span-6">
@@ -213,9 +262,11 @@ function copy() {
                 <span class="label-text">Drop location</span>
               </div>
               <div
-                @click="showMap"
-                class="w-full h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
-              ></div>
+                @click="drop_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
+                {{ form.dropLocation }}
+              </div>
             </label>
           </div>
           <!-- Location End -->
@@ -305,7 +356,18 @@ function copy() {
         </div>
       </div>
     </div>
-    <MapModal />
+    <MapModal
+      :is-open="pickup_modal"
+      @onclose="pickup_modal = false"
+      @get-location="setPickupLocation"
+      unique-id="pickup-location"
+    />
+    <MapModal
+      :is-open="drop_modal"
+      @onclose="drop_modal = false"
+      @get-location="setDropLocation"
+      unique-id="drop-location"
+    />
     <ToggleTheme />
   </div>
 </template>
