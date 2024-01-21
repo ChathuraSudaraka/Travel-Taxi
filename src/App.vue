@@ -3,6 +3,7 @@ import PrimaryInput from "@/components/PrimaryInput.vue";
 import ToggleTheme from "@/components/ThemeSwitch.vue";
 import PrimarySelect from "@/components/PrimarySelect.vue";
 import MapModal from "@/components/MapModal.vue";
+import Invoice from "@/components/Invoice.vue";
 
 import { useDark } from "@vueuse/core";
 import { computed, onMounted, ref, watch } from "vue";
@@ -369,6 +370,7 @@ function setDropLocation(location) {
       unique-id="drop-location"
     />
     <ToggleTheme />
+    <Invoice/>
   </div>
 </template>
 
