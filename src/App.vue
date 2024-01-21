@@ -26,6 +26,7 @@ const vehicles = [
   "Electric Scooter",
 ];
 
+const copy_icon = ref("md-contentcopy-round");
 const trip_id_start = ref("");
 const form = {
   tripId: "",
@@ -67,6 +68,32 @@ function showMap() {
 
 function copy() {
   console.log(form);
+  let form_copy = { ...form };
+  let keys = Object.keys(form_copy);
+  keys.forEach((key) => {
+    if (form_copy[key] === "") {
+      form_copy[key] = "N/A";
+    }
+  });
+  const text = `
+  Trip ID: ${trip_id_start.value}${form_copy.tripId}
+  Date: ${form_copy.date}
+  Time: ${form_copy.time}
+  Adults: ${form_copy.adults}
+  Children: ${form_copy.children}
+  Vehicle Type: ${form_copy.vehicleType}
+  Baggages: ${form_copy.baggages}
+  Pickup Location: ${form_copy.pickupLocation}
+  Drop Location: ${form_copy.dropLocation}
+  Surfboard: ${form_copy.surfboard}
+  Distance: ${form_copy.distance}
+  Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
+  `;
+  navigator.clipboard.writeText(text);
+  copy_icon.value = "bi-check-circle";
+  setTimeout(() => {
+    copy_icon.value = "md-contentcopy-round";
+  }, 1500);
 }
 </script>
 
@@ -200,11 +227,24 @@ function copy() {
             >
             <div class="grid grid-cols-2 place-items-center">
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" v-model="form.surfboard" />
+                <input
+                  type="radio"
+                  name="surfboard"
+                  class="radio"
+                  value="Available"
+                  v-model="form.surfboard"
+                />
                 <label for="yes">Yes</label>
               </div>
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" checked v-model="form.surfboard" />
+                <input
+                  type="radio"
+                  name="surfboard"
+                  class="radio"
+                  checked
+                  value="Not Available"
+                  v-model="form.surfboard"
+                />
                 <label for="yes">No</label>
               </div>
             </div>
@@ -257,7 +297,7 @@ function copy() {
             <button class="btn btn-error order-3 md:order-1">Reset</button>
             <button class="btn btn-primary order-2">Print</button>
             <button class="btn btn-neutral order-1 md:order-3" @click="copy">
-              <v-icon name="md-contentcopy-round" />
+              <v-icon :name="copy_icon" />
               Copy To Clipboard
             </button>
           </div>
