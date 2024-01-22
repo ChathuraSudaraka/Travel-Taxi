@@ -143,6 +143,11 @@ function setDropLocation(location) {
   form.value.dropLocation = location.place;
   dropLocationUrl.value = location.url;
 }
+
+function showInvoice() {
+  const invoice = document.querySelector("#invoice_modal");
+  invoice.showModal();
+}
 </script>
 
 <template>
@@ -347,7 +352,10 @@ function setDropLocation(location) {
             class="col-span-12 flex flex-col md:flex-row justify-center md:justify-end gap-4"
           >
             <button class="btn btn-error order-3 md:order-1">Reset</button>
-            <button class="btn btn-primary order-2">Print</button>
+            <button 
+              class="btn btn-primary order-2"
+              @click="showInvoice"  
+            >Print</button>
             <button class="btn btn-neutral order-1 md:order-3" @click="copy">
               <v-icon :name="copy_icon" />
               Copy To Clipboard
