@@ -18,6 +18,7 @@ const vehicles = [
   "Bus",
 ];
 
+const printable = ref({});
 const copy_icon = ref("md-contentcopy-round");
 const trip_id_start = ref("");
 const form = ref({
@@ -90,7 +91,7 @@ Children: ${form_copy.children}
 Surfboard: ${form_copy.surfboard}
 Baggages: ${form_copy.baggages}
 Vehicle Type: ${form_copy.vehicleType}\n
-Pickup Location: ${pickupLocationUrl.value ? pickupLocationUrl.value : "N/A"}
+Pickup Location: ${pickupLocationUrl.value ? pickupLocationUrl.value : "N/A"}\n
 Drop Location: ${dropLocationUrl.value ? dropLocationUrl.value : "N/A"}\n
 Distance: ${form_copy.distance}KM
 Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
@@ -117,14 +118,33 @@ function sendMsg() {
   const url = `http://smsm.lankabell.com:4040/Sms.svc/SendSms?phoneNumber=${phone}&smsMessage=${message}&companyId=${companyId}&pword=${pword}`;
   try {
     fetch(url, {
-      mode: 'no-cors'
+      mode: "no-cors",
     })
       .then((res) => res.json())
       .then((data) => {
         alert("Message Sent Successfully");
-      })
-  } catch (error) {
-  }
+      });
+  } catch (error) {}
+}
+
+function reset() {
+  form.value = {
+    tripId: "",
+    date: "",
+    time: "",
+    adults: "",
+    children: "",
+    vehicleType: "",
+    baggages: "",
+    pickupLocation: "",
+    dropLocation: "",
+    surfboard: "Not Available",
+    distance: "",
+    transportTimeH: "",
+    transportTimeM: "",
+  };
+  pickupLocationUrl.value = "";
+  dropLocationUrl.value = "";
 }
 
 async function calcRoute() {
@@ -170,16 +190,31 @@ function setDropLocation(location) {
 }
 
 function showInvoice() {
+  const form_copy = { ...form.value };
+  form_copy.pickupLocationUrl = pickupLocationUrl.value;
+  form_copy.dropLocationUrl = dropLocationUrl.value;
+
+  const keys = Object.keys(form_copy);
+  keys.forEach((key) => {
+    if (form_copy[key] == "") {
+      form_copy[key] = "N/A";
+    }
+  });
+  printable.value = form_copy;
   const invoice = document.querySelector("#invoice_modal");
   invoice.showModal();
 }
 </script>
 
 <template>
-  <div class="flex min-h-screen justify-center bg-gray-100 dark:bg-[#141414] bg-[url(/img/1.png)] bg-cover bg-center"
-    :data-theme="theme">
+  <div
+    class="flex min-h-screen justify-center bg-gray-100 dark:bg-[#141414] bg-[url(/img/1.png)] bg-cover bg-center"
+    :data-theme="theme"
+  >
     <div class="container p-5 pt-10">
-      <div class="p-5 md:p-8 lg:p-10 rounded-lg shadow-lg bg-[#f8fafc99] dark:bg-[#0f0f12e3] dark:shadow-black">
+      <div
+        class="p-5 md:p-8 lg:p-10 rounded-lg shadow-lg bg-[#f8fafc99] dark:bg-[#0f0f12e3] dark:shadow-black"
+      >
         <div class="grid grid-cols-12 gap-3">
           <!-- Trid ID Start -->
           <div class="col-span-12 lg:col-span-6">
@@ -189,14 +224,19 @@ function showInvoice() {
               </div>
               <div class="grid grid-cols-12">
                 <div
-                  class="col-span-5 md:col-span-4 lg:col-span-3 input-bordered border-r-0 flex justify-center items-center bg-gray-200 dark:bg-[#1d232a] rounded-l-lg">
+                  class="col-span-5 md:col-span-4 lg:col-span-3 input-bordered border-r-0 flex justify-center items-center bg-gray-200 dark:bg-[#1d232a] rounded-l-lg"
+                >
                   <span class="font-bold">
                     {{ trip_id_start }}
                   </span>
                 </div>
                 <div class="col-span-7 md:col-span-8 lg:col-span-9">
-                  <input type="text" placeholder="Enter The Trip ID"
-                    class="input input-bordered border-l-0 rounded-l-none w-full" v-model="form.tripId" />
+                  <input
+                    type="text"
+                    placeholder="Enter The Trip ID"
+                    class="input input-bordered border-l-0 rounded-l-none w-full"
+                    v-model="form.tripId"
+                  />
                 </div>
               </div>
             </label>
@@ -219,28 +259,48 @@ function showInvoice() {
           <!-- Trid Date & Time end -->
 
           <!-- Passengers Start -->
-          <div class="col-span-12 md:col-span-6 lg:col-span-6 grid grid-cols-2 gap-3">
+          <div
+            class="col-span-12 md:col-span-6 lg:col-span-6 grid grid-cols-2 gap-3"
+          >
             <div class="col-span-1">
-              <PrimaryInput type="number" label="Adults" placeholder="Adults Count" keyboard="numeric"
-                v-model="form.adults" />
+              <PrimaryInput
+                type="number"
+                label="Adults"
+                placeholder="Adults Count"
+                keyboard="numeric"
+                v-model="form.adults"
+              />
             </div>
             <div class="col-span-1">
-              <PrimaryInput type="number" label="Children" placeholder="Children Count" keyboard="numeric"
-                v-model="form.children" />
+              <PrimaryInput
+                type="number"
+                label="Children"
+                placeholder="Children Count"
+                keyboard="numeric"
+                v-model="form.children"
+              />
             </div>
           </div>
           <!-- Passengers End -->
 
           <!-- Vehicle Type Start -->
           <div class="col-span-6 md:col-span-6 lg:col-span-6 flex flex-col">
-            <PrimarySelect label="Vehicle Type" placeholder="Select Vehicle Type" :options="vehicles"
-              v-model="form.vehicleType" />
+            <PrimarySelect
+              label="Vehicle Type"
+              placeholder="Select Vehicle Type"
+              :options="vehicles"
+              v-model="form.vehicleType"
+            />
           </div>
           <!-- Vehicle Type End -->
 
           <!-- Baggages Start -->
           <div class="col-span-6 md:col-span-12 lg:col-span-6">
-            <PrimaryInput label="Baggages" placeholder="Enter Baggages" v-model="form.baggages" />
+            <PrimaryInput
+              label="Baggages"
+              placeholder="Enter Baggages"
+              v-model="form.baggages"
+            />
           </div>
           <!-- Baggages Start -->
 
@@ -250,8 +310,10 @@ function showInvoice() {
               <div class="label uppercase">
                 <span class="label-text">Pickup location</span>
               </div>
-              <div @click="pickup_modal = true"
-                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700">
+              <div
+                @click="pickup_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
                 {{ form.pickupLocation }}
               </div>
             </label>
@@ -261,8 +323,10 @@ function showInvoice() {
               <div class="label uppercase">
                 <span class="label-text">Drop location</span>
               </div>
-              <div @click="drop_modal = true"
-                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700">
+              <div
+                @click="drop_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
                 {{ form.dropLocation }}
               </div>
             </label>
@@ -271,15 +335,29 @@ function showInvoice() {
 
           <!-- Surfboard Start -->
           <div class="col-span-12 md:col-span-3">
-            <label for="surfboard" class="label text-sm uppercase">Surfboard</label>
+            <label for="surfboard" class="label text-sm uppercase"
+              >Surfboard</label
+            >
             <div class="grid grid-cols-2 place-items-center">
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" value="Available" v-model="form.surfboard" />
+                <input
+                  type="radio"
+                  name="surfboard"
+                  class="radio"
+                  value="Available"
+                  v-model="form.surfboard"
+                />
                 <label for="yes">Yes</label>
               </div>
               <div class="flex items-center gap-3">
-                <input type="radio" name="surfboard" class="radio" checked value="Not Available"
-                  v-model="form.surfboard" />
+                <input
+                  type="radio"
+                  name="surfboard"
+                  class="radio"
+                  checked
+                  value="Not Available"
+                  v-model="form.surfboard"
+                />
                 <label for="yes">No</label>
               </div>
             </div>
@@ -288,30 +366,54 @@ function showInvoice() {
 
           <!-- Distance Start -->
           <div class="col-span-12 md:col-span-3">
-            <PrimaryInput label="Total Distance" placeholder="Enter The Distance" messure="KM" v-model="form.distance" />
+            <PrimaryInput
+              label="Total Distance"
+              placeholder="Enter The Distance"
+              messure="KM"
+              v-model="form.distance"
+            />
           </div>
           <!-- Distance End -->
 
           <!-- Time Start -->
           <div class="col-span-12 md:col-span-6">
-            <label for="time" class="label uppercase text-sm">Transport Time</label>
+            <label for="time" class="label uppercase text-sm"
+              >Transport Time</label
+            >
             <div class="grid grid-cols-2 gap-3">
               <div class="col-span-1">
-                <PrimaryInput type="number" placeholder="Hours" keyboard="numeric" messure="H"
-                  v-model="form.transportTimeH" />
+                <PrimaryInput
+                  type="number"
+                  placeholder="Hours"
+                  keyboard="numeric"
+                  messure="H"
+                  v-model="form.transportTimeH"
+                />
               </div>
               <div class="col-span-1">
-                <PrimaryInput type="number" placeholder="Minutes" keyboard="numeric" messure="M"
-                  v-model="form.transportTimeM" />
+                <PrimaryInput
+                  type="number"
+                  placeholder="Minutes"
+                  keyboard="numeric"
+                  messure="M"
+                  v-model="form.transportTimeM"
+                />
               </div>
             </div>
           </div>
           <!-- Time End -->
 
           <!-- Button Set Start -->
-          <div class="col-span-12 flex flex-col md:flex-row justify-center md:justify-end gap-4">
-            <button class="btn btn-error order-4 md:order-1">Reset</button>
-            <button class="btn btn-success order-3 md:order-2" @click="showInvoice">
+          <div
+            class="col-span-12 flex flex-col md:flex-row justify-center md:justify-end gap-4"
+          >
+            <button class="btn btn-error order-4 md:order-1" @click="reset">
+              Reset
+            </button>
+            <button
+              class="btn btn-success order-3 md:order-2"
+              @click="showInvoice"
+            >
               Print
             </button>
             <button class="btn btn-primary order-2 md:order-3" @click="copy">
@@ -327,12 +429,20 @@ function showInvoice() {
         </div>
       </div>
     </div>
-    <MapModal :is-open="pickup_modal" @onclose="pickup_modal = false" @get-location="setPickupLocation"
-      unique-id="pickup-location" />
-    <MapModal :is-open="drop_modal" @onclose="drop_modal = false" @get-location="setDropLocation"
-      unique-id="drop-location" />
+    <MapModal
+      :is-open="pickup_modal"
+      @onclose="pickup_modal = false"
+      @get-location="setPickupLocation"
+      unique-id="pickup-location"
+    />
+    <MapModal
+      :is-open="drop_modal"
+      @onclose="drop_modal = false"
+      @get-location="setDropLocation"
+      unique-id="drop-location"
+    />
     <ToggleTheme />
-    <Invoice />
+    <Invoice :items="printable" />
   </div>
 </template>
 

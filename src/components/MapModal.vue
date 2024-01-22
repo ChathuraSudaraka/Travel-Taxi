@@ -11,6 +11,7 @@ const props = defineProps({
   },
 });
 
+const selected_url = ref("");
 const status = ref(props.isOpen);
 watch(status, (value) => {
   if (!value) {
@@ -53,8 +54,6 @@ onMounted(() => {
       marker = new google.maps.Marker({
         position: location.value,
         map,
-        title: "Drag To Select The Location !",
-        draggable: true,
       });
 
       // auto complete address
@@ -62,7 +61,7 @@ onMounted(() => {
         streetRef.value,
         {
           types: ["establishment"],
-          fields: ["address_components", "geometry", "icon", "name"],
+          fields: ["address_components", "geometry", "icon", "name", "url"],
           bounds: map.getBounds(),
           location: map.getCenter(),
         }
@@ -71,7 +70,6 @@ onMounted(() => {
       // add event listener to autocomplete place change
       autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-
         if (!place.geometry) {
           alert(
             "No details available for input: '" +
@@ -85,6 +83,8 @@ onMounted(() => {
         } else {
           map.setCenter(place.geometry.location);
         }
+
+        selected_url.value = place.url;
         marker.setPosition(place.geometry.location);
       });
     })
@@ -102,7 +102,8 @@ async function getLocation() {
       if (status === "OK" && results[0]) {
         let lat = marker.getPosition().lat();
         let lng = marker.getPosition().lng();
-        output.url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
+        output.url = selected_url.value;
         output.place = results[0].formatted_address;
       } else {
         output = "try again !";
