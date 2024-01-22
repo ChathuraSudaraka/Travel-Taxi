@@ -1,4 +1,6 @@
 <script setup>
+import { jsPDF } from "jspdf";
+
 const props = defineProps({
   items: {
     type: Object,
@@ -9,22 +11,16 @@ const props = defineProps({
 function print() {
   const printable = document.getElementById("printable_invoice");
 
-  // Check if the printable element exists
-  if (printable) {
-    // Save the current content of the document body
-    const originalContents = document.body.innerHTML;
+  const doc = new jsPDF({
+    unit: "px",
+    format: [700, 1100]
+  });
 
-    // Replace the content of the document body with the content of the printable element
-    document.body.innerHTML = printable.innerHTML;
-
-    // Call the print method to initiate the printing process
-    window.print();
-
-    // Restore the original content of the document body
-    document.body.innerHTML = originalContents;
-  } else {
-    console.error("Printable element not found.");
-  }
+  doc.html(printable, {
+    callback: function (pdf) {
+      pdf.save("invoice.pdf");
+    },
+  });
 }
 </script>
 
@@ -35,7 +31,7 @@ function print() {
       <div class="">
         <!-- Invoice -->
         <div
-          class="max-w-[85rem] px-4 sm:px-6 lg:px-8 mx-auto my-4 sm:my-10"
+          class="max-w-[700px] px-4 sm:px-5 mx-auto my-4 sm:my-10"
           id="printable_invoice"
         >
           <div class="sm:w-11/12 lg:w-3/4 mx-auto">
@@ -147,7 +143,7 @@ function print() {
                     <div class="col-span-full sm:col-span-2">
                       <p class="font-medium text-gray-800">Surfboard</p>
                     </div>
-                    <div>
+                    <div class="col-span-2">
                       <p class="text-start text-gray-800">
                         {{ items.surfboard }}
                       </p>
@@ -189,12 +185,12 @@ function print() {
                     <div class="col-span-full sm:col-span-2">
                       <p class="font-medium text-gray-800">Pickup Location</p>
                     </div>
-                    <div class="col-span-full sm:col-span-2">
+                    <div class="col-span-full sm:col-span-3">
                       <a
                         class="text-start text-blue-600"
                         :href="items.pickupLocationUrl"
                       >
-                        {{ items.pickupLocation }}
+                        {{ items.pickupLocationUrl?.trim() }}
                       </a>
                     </div>
                   </div>
@@ -206,12 +202,12 @@ function print() {
                     <div class="col-span-2">
                       <p class="font-medium text-gray-800">Drop Location</p>
                     </div>
-                    <div class="col-span-full sm:col-span-2">
+                    <div class="col-span-full sm:col-span-3">
                       <a
                         class="text-start text-blue-600"
                         :href="items.dropLocationUrl"
                       >
-                        {{ items.dropLocation }}
+                        {{ items.dropLocationUrl?.trim() }}
                       </a>
                     </div>
                   </div>
@@ -238,7 +234,7 @@ function print() {
                     <div class="col-span-full sm:col-span-2">
                       <p class="font-medium text-gray-800">Transport Time</p>
                     </div>
-                    <div>
+                    <div class="col-span-2">
                       <p class="text-start text-gray-800">
                         {{ items.transportTimeH }}H {{ items.transportTimeM }}M
                       </p>

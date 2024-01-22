@@ -11,13 +11,14 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
     "@vueuse/core": "^10.7.2",
+    "jspdf": "^2.5.1",
     "oh-vue-icons": "^1.0.0-rc3",
     "vue": "^3.3.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.2",
     "autoprefixer": "^10.4.17",
-    "daisyui": "^4.6.0",
+    "daisyui": "3.9.4",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.8"
