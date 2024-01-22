@@ -73,7 +73,7 @@ function generateUniqueId() {
 const pickup_modal = ref(false);
 const drop_modal = ref(false);
 
-function copy() {
+function setupMsg() {
   let form_copy = { ...form.value };
   let keys = Object.keys(form_copy);
   keys.forEach((key) => {
@@ -95,11 +95,45 @@ Drop Location: ${dropLocationUrl.value ? dropLocationUrl.value : "N/A"}\n
 Distance: ${form_copy.distance}KM
 Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
   `;
+  return text;
+}
+
+function copy() {
+  const text = setupMsg();
   navigator.clipboard.writeText(text);
   copy_icon.value = "bi-check-circle";
   setTimeout(() => {
     copy_icon.value = "md-contentcopy-round";
   }, 1500);
+}
+
+function sendMsg() {
+  const text = setupMsg();
+  const phone = import.meta.env.VITE_MOBILE_NUMBER;
+  const message = encodeURIComponent(text);
+  const companyId = import.meta.env.VITE_LANKABELL_COMPANY_ID;
+  const pword = import.meta.env.VITE_LANKABELL_PASSWORD;
+
+  const url = `https://smsm.lankabell.com:4040/Sms.svc/SendSms?phoneNumber=${phone}&smsMessage=${message}&companyId=${companyId}&pword=${pword}`;
+  // fetch(url)
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     if (data === "Success") {
+  //       alert("Message Sent Successfully");
+  //     } else {
+  //       alert("Message Sent Failed");
+  //     }
+  //   });
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", url);
+  xhr.send();
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      alert("Message Sent Successfully");
+    } else {
+      alert("Message Sent Failed");
+    }
+  };
 }
 
 async function calcRoute() {
@@ -351,14 +385,20 @@ function showInvoice() {
           <div
             class="col-span-12 flex flex-col md:flex-row justify-center md:justify-end gap-4"
           >
-            <button class="btn btn-error order-3 md:order-1">Reset</button>
-            <button 
-              class="btn btn-primary order-2"
-              @click="showInvoice"  
-            >Print</button>
-            <button class="btn btn-neutral order-1 md:order-3" @click="copy">
+            <button class="btn btn-error order-4 md:order-1">Reset</button>
+            <button
+              class="btn btn-success order-3 md:order-2"
+              @click="showInvoice"
+            >
+              Print
+            </button>
+            <button class="btn btn-primary order-2 md:order-3" @click="copy">
               <v-icon :name="copy_icon" />
               Copy To Clipboard
+            </button>
+            <button class="btn btn-neutral order-1 md:order-4" @click="sendMsg">
+              Send Message
+              <v-icon name="io-send" />
             </button>
           </div>
           <!-- Button Set End -->
@@ -378,7 +418,7 @@ function showInvoice() {
       unique-id="drop-location"
     />
     <ToggleTheme />
-    <Invoice/>
+    <Invoice />
   </div>
 </template>
 

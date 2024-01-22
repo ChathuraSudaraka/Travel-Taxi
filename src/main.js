@@ -3,9 +3,9 @@ import './index.css'
 import App from './App.vue'
 
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { MdContentcopyRound, BiCheckCircle } from "oh-vue-icons/icons";
+import { MdContentcopyRound, BiCheckCircle, IoSend } from "oh-vue-icons/icons";
 
-addIcons(MdContentcopyRound, BiCheckCircle);
+addIcons(MdContentcopyRound, BiCheckCircle, IoSend);
 
 const app = createApp(App);
 app.component("v-icon", OhVueIcon);
