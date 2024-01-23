@@ -240,7 +240,7 @@ function print() {
               <div class="mt-8">
                 <h4 class="text-lg font-semibold text-gray-800">Thank you!</h4>
                 <p class="text-gray-500">
-                  If you have any questions concerning this invoice, use the
+                  If you have any questions concerning this transfer, use the
                   following contact information:
                 </p>
                 <div class="mt-2">
