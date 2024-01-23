@@ -233,6 +233,9 @@ function showInvoice() {
   const form_copy = { ...form.value };
   form_copy.pickupLocationUrl = pickupLocationUrl.value;
   form_copy.dropLocationUrl = dropLocationUrl.value;
+  if (form_copy.tripId != "") {
+    form_copy.tripId = `${trip_id_start.value}${form_copy.tripId}`;
+  }
 
   const keys = Object.keys(form_copy);
   keys.forEach((key) => {

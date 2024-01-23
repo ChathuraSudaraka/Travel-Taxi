@@ -230,6 +230,7 @@ body {
 
 page[size="A5"] {
   background: white;
+  width: 760px;
   display: block;
   margin: 0 auto;
   margin-bottom: 0.5cm;
