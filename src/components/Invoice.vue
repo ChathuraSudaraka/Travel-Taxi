@@ -2,7 +2,6 @@
 import { jsPDF } from "jspdf";
 import Toastify from "toastify-js";
 
-
 const props = defineProps({
   items: {
     type: Object,
@@ -12,7 +11,15 @@ const props = defineProps({
 
 function print() {
   const printable = document.getElementById("printable_invoice");
-
+  Toastify({
+    text: "Downloading started",
+    close: true,
+    duration: 3000,
+    style: {
+      background:
+        "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+    },
+  }).showToast();
   const doc = new jsPDF({
     unit: "px",
     format: [860, 999],
@@ -20,15 +27,6 @@ function print() {
 
   doc.html(printable, {
     callback: function (pdf) {
-      Toastify({
-        text: "Downloading started",
-        close: true,
-        duration: 3000,
-        style: {
-          background:
-            "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
-        },
-      }).showToast();
       setTimeout(() => {
         copy_icon.value = "md-contentcopy-round";
       }, 1500);
@@ -42,6 +40,11 @@ function print() {
   <!-- Print Modal Start -->
   <dialog id="invoice_modal" class="modal">
     <div class="modal-box w-11/12 max-w-4xl rounded-lg shadow-lg">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          ✕
+        </button>
+      </form>
       <div class="">
         <!-- Invoice -->
         <div class="" id="printable_invoice">
@@ -51,7 +54,13 @@ function print() {
               <!-- Grid -->
               <div class="flex justify-between">
                 <div>
-                  <img src="/img/machanlogo.png" alt="" class="w-32 h-30" width="26" height="26" />
+                  <img
+                    src="/img/machanlogo.png"
+                    alt=""
+                    class="w-32 h-30"
+                    width="26"
+                    height="26"
+                  />
 
                   <!-- <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600 dark:text-white">Preline Inc.
                   </h1> -->
@@ -62,7 +71,9 @@ function print() {
                   <h2 class="text-2xl md:text-2xl font-semibold text-gray-800">
                     Best Budget Taxi Service
                   </h2>
-                  <h2 class="text-1xl text-center md:text-1xl font-semibold text-gray-800">
+                  <h2
+                    class="text-1xl text-center md:text-1xl font-semibold text-gray-800"
+                  >
                     Hot Line <a class="ml-3"> +94 717 800 600 </a>
                   </h2>
                   <h2 class="text-1xl md:text-1xl font-semibold text-gray-800">
@@ -75,8 +86,9 @@ function print() {
 
               <!-- Table -->
               <div class="mt-6">
-                <div class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
-
+                <div
+                  class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700"
+                >
                   <div class="grid grid-cols-5 gap-2">
                     <div class="col-span-2">
                       <p class="font-medium text-gray-800">Trip ID</p>
@@ -111,7 +123,9 @@ function print() {
                       <p class="font-medium text-gray-800">Flight Number</p>
                     </div>
                     <div>
-                      <p class="text-start text-gray-800">{{ items.flightNumber }}</p>
+                      <p class="text-start text-gray-800">
+                        {{ items.flightNumber }}
+                      </p>
                     </div>
                   </div>
 
@@ -175,7 +189,10 @@ function print() {
                       <p class="font-medium text-gray-800">Pickup Location</p>
                     </div>
                     <div class="col-span-3">
-                      <a class="text-start text-blue-600" :href="items.pickupLocationUrl">
+                      <a
+                        class="text-start text-blue-600"
+                        :href="items.pickupLocationUrl"
+                      >
                         {{ items.pickupLocationUrl?.trim() }}
                       </a>
                     </div>
@@ -186,7 +203,10 @@ function print() {
                       <p class="font-medium text-gray-800">Drop Location</p>
                     </div>
                     <div class="col-span-3">
-                      <a class="text-start text-blue-600" :href="items.dropLocationUrl">
+                      <a
+                        class="text-start text-blue-600"
+                        :href="items.dropLocationUrl"
+                      >
                         {{ items.dropLocationUrl?.trim() }}
                       </a>
                     </div>
@@ -242,15 +262,16 @@ function print() {
       </div>
 
       <div class="mt-4 flex justify-end gap-2">
-        <button class="btn" @click="print">Save</button>
-        <div>
-          <form method="dialog" class="modal-backdrop">
-            <button class="btn">close</button>
-          </form>
-        </div>
+        <form method="dialog">
+          <button class="btn btn-error">Close</button>
+        </form>
+        <button class="btn btn-primary" @click="print">Save</button>
       </div>
     </div>
 
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
   </dialog>
   <!-- Print Modal End -->
 </template>
@@ -269,7 +290,6 @@ page[size="A5"] {
 }
 
 @media print {
-
   body,
   page[size="A4"] {
     margin: 0;

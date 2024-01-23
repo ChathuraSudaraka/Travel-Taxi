@@ -99,7 +99,7 @@ Pickup Location: ${pickupLocationUrl.value ? pickupLocationUrl.value : "N/A"}\n
 Drop Location: ${dropLocationUrl.value ? dropLocationUrl.value : "N/A"}\n
 Distance: ${form_copy.distance}KM
 Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
-  `;
+  `.trim();
   return text;
 }
 
