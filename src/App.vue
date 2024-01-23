@@ -4,7 +4,9 @@ import ToggleTheme from "@/components/ThemeSwitch.vue";
 import PrimarySelect from "@/components/PrimarySelect.vue";
 import MapModal from "@/components/MapModal.vue";
 import Invoice from "@/components/Invoice.vue";
+import NumberModal from "@/components/NumberModal.vue";
 
+import Toastify from "toastify-js";
 import { useDark } from "@vueuse/core";
 import { computed, onMounted, ref, watch } from "vue";
 
@@ -103,14 +105,40 @@ function copy() {
   const text = setupMsg();
   navigator.clipboard.writeText(text);
   copy_icon.value = "bi-check-circle";
+  Toastify({
+    text: "Copied to clipboard",
+    close: true,
+    duration: 3000,
+    style: {
+      background:
+        "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+    },
+  }).showToast();
   setTimeout(() => {
     copy_icon.value = "md-contentcopy-round";
   }, 1500);
 }
 
-function sendMsg() {
+function getNumber() {
+  document.getElementById("number_modal").showModal();
+  return;
+}
+
+function sendMsg(number) {
+  if (number.trim() == "") {
+    Toastify({
+      text: "Mobile Number Is Required",
+      close: true,
+      duration: 3000,
+      style: {
+        background:
+          "linear-gradient(90deg, rgba(203,0,0,1) 0%, rgba(251,30,144,1) 50%, rgba(227,123,29,1) 100%)",
+      },
+    }).showToast();
+    return;
+  }
   const text = setupMsg();
-  const phone = import.meta.env.VITE_MOBILE_NUMBER;
+  const phone = number;
   const message = encodeURIComponent(text);
   const companyId = import.meta.env.VITE_LANKABELL_COMPANY_ID;
   const pword = import.meta.env.VITE_LANKABELL_PASSWORD;
@@ -122,9 +150,21 @@ function sendMsg() {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Message Sent Successfully");
+        // alert("Message Sent Successfully");
       });
-  } catch (error) {}
+  } catch (error) {
+  } finally {
+    document.getElementById("number_modal").close();
+    Toastify({
+      text: "Message sent successfully",
+      close: true,
+      duration: 3000,
+      style: {
+        background:
+          "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+      },
+    }).showToast();
+  }
 }
 
 function reset() {
@@ -420,7 +460,10 @@ function showInvoice() {
               <v-icon :name="copy_icon" />
               Copy To Clipboard
             </button>
-            <button class="btn btn-neutral order-1 md:order-4" @click="sendMsg">
+            <button
+              class="btn btn-neutral order-1 md:order-4"
+              @click="getNumber"
+            >
               Send Message
               <v-icon name="io-send" />
             </button>
@@ -441,8 +484,9 @@ function showInvoice() {
       @get-location="setDropLocation"
       unique-id="drop-location"
     />
-    <ToggleTheme />
     <Invoice :items="printable" />
+    <NumberModal @send="sendMsg" />
+    <ToggleTheme />
   </div>
 </template>
 

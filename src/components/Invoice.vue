@@ -13,7 +13,7 @@ function print() {
 
   const doc = new jsPDF({
     unit: "px",
-    format: [825 , 999],
+    format: [900 , 999],
   });
 
   doc.html(printable, {
@@ -33,7 +33,7 @@ function print() {
         <div class="" id="printable_invoice">
           <div class="">
             <!-- Card -->
-            <page class="p-4 rounded-xl" size="A4">
+            <page class="p-4 rounded-xl" size="A5">
               <!-- Grid -->
               <div class="flex justify-between">
                 <div>
@@ -228,10 +228,8 @@ body {
   background: rgb(204, 204, 204);
 }
 
-page[size="A4"] {
+page[size="A5"] {
   background: white;
-  width: 21cm;
-  height: 29.7cm;
   display: block;
   margin: 0 auto;
   margin-bottom: 0.5cm;
