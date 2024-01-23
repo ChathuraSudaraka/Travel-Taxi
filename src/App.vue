@@ -104,7 +104,6 @@ Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
 }
 
 function copy() {
-  console.log(form.value.vehicleType);
   const text = setupMsg();
   navigator.clipboard.writeText(text);
   copy_icon.value = "bi-check-circle";
@@ -143,41 +142,28 @@ function sendMsg(number) {
   const text = setupMsg();
   const mobile = number;
   const message = encodeURIComponent(text);
-  const url = `${import.meta.env.VITE_BACKEND_URL}/api/send`;
-  console.log(url)
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ mobile, message }),
-  })
-    .then((data) => data.json())
-    .then((res) => {
-      if (res.Status == "200") {
-        Toastify({
-          text: "Message Sent Successfully",
-          close: true,
-          duration: 3000,
-          style: {
-            background:
-              "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
-          },
-        }).showToast();
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      Toastify({
-        text: "Something Went Wrong",
-        close: true,
-        duration: 3000,
-        style: {
-          background:
-            "linear-gradient(90deg, rgba(203,0,0,1) 0%, rgba(251,30,144,1) 50%, rgba(227,123,29,1) 100%)",
-        },
-      }).showToast();
+  const url = `${import.meta.env.VITE_BACKEND_URL}/api/sendMessage.php`;
+
+  try {
+    fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mobile, message }),
     });
+  } catch (error) {}
+
+  Toastify({
+    text: "Message Sent Successfully",
+    close: true,
+    duration: 3000,
+    style: {
+      background:
+        "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+    },
+  }).showToast();
 }
 
 function reset() {
