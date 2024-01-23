@@ -1,5 +1,7 @@
 <script setup>
 import { jsPDF } from "jspdf";
+import Toastify from "toastify-js";
+
 
 const props = defineProps({
   items: {
@@ -13,12 +15,24 @@ function print() {
 
   const doc = new jsPDF({
     unit: "px",
-    format: [860 , 999],
+    format: [860, 999],
   });
 
   doc.html(printable, {
     callback: function (pdf) {
-      pdf.save("invoice.pdf");
+      Toastify({
+        text: "Downloading started",
+        close: true,
+        duration: 3000,
+        style: {
+          background:
+            "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+        },
+      }).showToast();
+      setTimeout(() => {
+        copy_icon.value = "md-contentcopy-round";
+      }, 1500);
+      pdf.save(`transfer-${props.items.tripId}.pdf`);
     },
   });
 }
@@ -46,7 +60,13 @@ function print() {
 
                 <div class="text-end">
                   <h2 class="text-2xl md:text-2xl font-semibold text-gray-800">
-                    Sri Lanka reliable Budget Taxi Service
+                    Best Budget Taxi Service
+                  </h2>
+                  <h2 class="text-1xl text-center md:text-1xl font-semibold text-gray-800">
+                    Hot Line <a class="ml-3"> +94 717 800 600 </a>
+                  </h2>
+                  <h2 class="text-1xl md:text-1xl font-semibold text-gray-800">
+                    FB/machantaxi www.machantaxi.com
                   </h2>
                 </div>
                 <!-- Col -->
@@ -221,13 +241,16 @@ function print() {
         <!-- End Invoice -->
       </div>
 
-      <div class="mt-4 flex justify-end">
+      <div class="mt-4 flex justify-end gap-2">
         <button class="btn" @click="print">Save</button>
+        <div>
+          <form method="dialog" class="modal-backdrop">
+            <button class="btn">close</button>
+          </form>
+        </div>
       </div>
     </div>
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
+
   </dialog>
   <!-- Print Modal End -->
 </template>
