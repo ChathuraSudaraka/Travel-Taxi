@@ -13,7 +13,7 @@ function print() {
 
   const doc = new jsPDF({
     unit: "px",
-    format: [700, 1100],
+    format: [825 , 999],
   });
 
   doc.html(printable, {
@@ -27,28 +27,17 @@ function print() {
 <template>
   <!-- Print Modal Start -->
   <dialog id="invoice_modal" class="modal">
-    <div class="modal-box w-11/12 max-w-5xl rounded-lg shadow-lg">
+    <div class="modal-box w-11/12 max-w-4xl rounded-lg shadow-lg">
       <div class="">
         <!-- Invoice -->
-        <div
-          class="max-w-[700px] px-4 sm:px-5 mx-auto my-4 sm:my-10"
-          id="printable_invoice"
-        >
-          <div class="sm:w-11/12 lg:w-3/4 mx-auto">
+        <div class="" id="printable_invoice">
+          <div class="">
             <!-- Card -->
-            <div
-              class="flex flex-col p-4 sm:p-10 bg-white shadow-md rounded-xl"
-            >
+            <page class="p-4 rounded-xl" size="A4">
               <!-- Grid -->
               <div class="flex justify-between">
                 <div>
-                  <img
-                    src="/img/machanlogo.png"
-                    alt=""
-                    class="w-32 h-30"
-                    width="26"
-                    height="26"
-                  />
+                  <img src="/img/machanlogo.png" alt="" class="w-32 h-30" width="26" height="26" />
 
                   <!-- <h1 class="mt-2 text-lg md:text-xl font-semibold text-blue-600 dark:text-white">Preline Inc.
                   </h1> -->
@@ -66,13 +55,10 @@ function print() {
 
               <!-- Table -->
               <div class="mt-6">
-                <div
-                  class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700"
-                >
-                  <!-- <div class="hidden sm:block border-b border-gray-200 dark:border-gray-700"></div> -->
+                <div class="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-gray-700">
 
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Trip ID</p>
                     </div>
                     <div>
@@ -82,12 +68,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Date</p>
                     </div>
                     <div>
@@ -95,12 +77,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Time</p>
                     </div>
                     <div>
@@ -108,11 +86,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Adults</p>
                     </div>
                     <div>
@@ -122,11 +97,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Children</p>
                     </div>
                     <div>
@@ -136,11 +108,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Surfboard</p>
                     </div>
                     <div class="col-span-2">
@@ -150,11 +119,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Baggages</p>
                     </div>
                     <div>
@@ -164,11 +130,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Vehicle Type</p>
                     </div>
                     <div>
@@ -178,45 +141,30 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Pickup Location</p>
                     </div>
-                    <div class="col-span-full sm:col-span-3">
-                      <a
-                        class="text-start text-blue-600"
-                        :href="items.pickupLocationUrl"
-                      >
+                    <div class="col-span-3">
+                      <a class="text-start text-blue-600" :href="items.pickupLocationUrl">
                         {{ items.pickupLocationUrl?.trim() }}
                       </a>
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                  <div class="grid grid-cols-5 gap-2">
                     <div class="col-span-2">
                       <p class="font-medium text-gray-800">Drop Location</p>
                     </div>
-                    <div class="col-span-full sm:col-span-3">
-                      <a
-                        class="text-start text-blue-600"
-                        :href="items.dropLocationUrl"
-                      >
+                    <div class="col-span-3">
+                      <a class="text-start text-blue-600" :href="items.dropLocationUrl">
                         {{ items.dropLocationUrl?.trim() }}
                       </a>
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Distance</p>
                     </div>
                     <div>
@@ -226,12 +174,8 @@ function print() {
                     </div>
                   </div>
 
-                  <div
-                    class="sm:hidden border-b border-gray-200 dark:border-gray-700"
-                  ></div>
-
-                  <div class="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                    <div class="col-span-full sm:col-span-2">
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Transport Time</p>
                     </div>
                     <div class="col-span-2">
@@ -244,7 +188,7 @@ function print() {
               </div>
               <!-- End Table -->
 
-              <div class="mt-8 sm:mt-12">
+              <div class="mt-8">
                 <h4 class="text-lg font-semibold text-gray-800">Thank you!</h4>
                 <p class="text-gray-500">
                   If you have any questions concerning this invoice, use the
@@ -261,7 +205,7 @@ function print() {
               </div>
 
               <p class="mt-5 text-sm text-gray-500">© 2024 machanTaxi.</p>
-            </div>
+            </page>
             <!-- End Card -->
           </div>
         </div>
@@ -278,3 +222,27 @@ function print() {
   </dialog>
   <!-- Print Modal End -->
 </template>
+
+<style>
+body {
+  background: rgb(204, 204, 204);
+}
+
+page[size="A4"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+}
+
+@media print {
+
+  body,
+  page[size="A4"] {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+</style>
