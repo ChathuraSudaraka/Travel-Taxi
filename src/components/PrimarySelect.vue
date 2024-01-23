@@ -41,7 +41,7 @@ defineProps({
       @change="$emit('update:modelValue', $event.target.value)"
       class="select select-bordered"
     >
-      <option disabled selected>{{ placeholder }}</option>
+      <option :selected="modelValue == '0'">{{ placeholder }}</option>
       <option v-for="option in options" :key="option">{{ option }}</option>
     </select>
     <div class="label">

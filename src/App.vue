@@ -29,6 +29,7 @@ const form = ref({
   time: "",
   adults: "",
   children: "",
+  flightNumber: "",
   vehicleType: "",
   baggages: "",
   pickupLocation: "",
@@ -87,7 +88,8 @@ function setupMsg() {
   const text = `
 Trip ID: ${trip_id_start.value}${form_copy.tripId}
 Date: ${form_copy.date}
-Time: ${form_copy.time}\n
+Time: ${form_copy.time}
+Flight Number: ${form_copy.flightNumber}\n
 Adults: ${form_copy.adults}
 Children: ${form_copy.children}
 Surfboard: ${form_copy.surfboard}
@@ -102,6 +104,7 @@ Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
 }
 
 function copy() {
+  console.log(form.value.vehicleType)
   const text = setupMsg();
   navigator.clipboard.writeText(text);
   copy_icon.value = "bi-check-circle";
@@ -174,7 +177,8 @@ function reset() {
     time: "",
     adults: "",
     children: "",
-    vehicleType: "",
+    flightNumber: "",
+    vehicleType: "0",
     baggages: "",
     pickupLocation: "",
     dropLocation: "",
@@ -288,7 +292,7 @@ function showInvoice() {
 
           <!-- Flight number Start -->
           <div class="col-span-12 md:col-span-12 lg:col-span-6">
-            <PrimaryInput label="Flight number" placeholder="Enter Flight No" />
+            <PrimaryInput label="Flight number" placeholder="Enter Flight No" v-model="form.flightNumber" />
           </div>
           <!-- Flight number End -->
 

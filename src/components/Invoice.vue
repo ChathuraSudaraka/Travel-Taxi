@@ -88,6 +88,15 @@ function print() {
 
                   <div class="grid grid-cols-5 gap-2">
                     <div class="col-span-2">
+                      <p class="font-medium text-gray-800">Flight Number</p>
+                    </div>
+                    <div>
+                      <p class="text-start text-gray-800">{{ items.flightNumber }}</p>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-5 gap-2">
+                    <div class="col-span-2">
                       <p class="font-medium text-gray-800">Adults</p>
                     </div>
                     <div>
