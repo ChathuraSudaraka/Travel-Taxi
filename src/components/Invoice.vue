@@ -13,7 +13,7 @@ function print() {
 
   const doc = new jsPDF({
     unit: "px",
-    format: [900 , 999],
+    format: [860 , 999],
   });
 
   doc.html(printable, {
