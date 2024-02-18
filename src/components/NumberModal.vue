@@ -26,7 +26,7 @@ const number = ref("");
       </div>
       <!-- Baggages Start -->
       <div class="mt-5 flex justify-end">
-        <button class="btn btn-neutral" @click="$emit('send', number)">
+        <button class="btn btn-neutral" type="button" @click="$emit('send', number)">
           Send
         </button>
       </div>

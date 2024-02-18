@@ -1,28 +1,50 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// load .env
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+
+// decode json request
 $data = json_decode(file_get_contents("php://input"));
 
-$company_id = "PEARLAQ403";
-$password = "qOs3EapSiH";
-
+// load data
+$message = urlencode($data->message);
 $mobile = $data->mobile;
-$message = $data->message;
 
-$url = "http://smsm.lankabell.com:4040/Sms.svc/SendSms?phoneNumber=$mobile&smsMessage=$message&companyId=$company_id&pword=$password";
+// load credentials
+$mask = urlencode($_ENV['RICHMO_MASK']);
+$key = $_ENV['RICHMO_SMS_API_KEY'];
 
+// setup message
+$curl = curl_init();
+curl_setopt_array($curl, array(
+    CURLOPT_URL => "https://portal.richmo.lk/api/sms/send/?dst=94783757726&from=$mask&msg=$message",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_CUSTOMREQUEST => 'GET',
+    CURLOPT_HTTPHEADER => array(
+        "Authorization: Bearer $key"
+    ),
+));
+
+// send message & handle response
 try {
-    file_get_contents($url);
+    $response = curl_exec($curl);
     echo json_encode([
         "status" => "success",
-        "message" => "Message sent successfully"
+        "message" => "Message Sent Successfully",
+        "response" => $response
     ]);
-} catch (\Throwable $th) {
+} catch (Exception $th) {
     echo json_encode([
         "status" => "error",
-        "message" => "Error sending message"
+        "message" => $th->getMessage(),
     ]);
 }
+
+curl_close($curl);
