@@ -34,10 +34,18 @@ curl_setopt_array($curl, array(
 
 // send message & handle response
 try {
-    $response = curl_exec($curl);
+    $response = json_decode(curl_exec($curl), true);
+    if (isset($response["message"])) {
+        echo json_encode([
+            "status" => "success",
+            "message" => "Message Sent Successfully",
+
+        ]);
+        return;
+    }
     echo json_encode([
-        "status" => "success",
-        "message" => "Message Sent Successfully",
+        "status" => "error",
+        "message" => "Error While Sending Message. ",
         "response" => $response
     ]);
 } catch (Exception $th) {

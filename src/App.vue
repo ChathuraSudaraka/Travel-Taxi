@@ -152,15 +152,27 @@ function sendMsg(number) {
   })
     .then((res) => res.json())
     .then((res) => {
-      Toastify({
-        text: "Message Sent Successfully",
-        close: true,
-        duration: 3000,
-        style: {
-          background:
-            "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
-        },
-      }).showToast();
+      if (res.status == "success") {
+        Toastify({
+          text: "Message Sent Successfully",
+          close: true,
+          duration: 3000,
+          style: {
+            background:
+              "linear-gradient(90deg, rgba(192,0,203,1) 0%, rgba(30,84,251,1) 50%, rgba(29,227,113,1) 100%)",
+          },
+        }).showToast();
+      } else {
+        Toastify({
+          text: "Error While Sending Message.",
+          close: true,
+          duration: 3000,
+          style: {
+            background:
+              "linear-gradient(90deg, rgba(203,0,0,1) 0%, rgba(251,30,144,1) 50%, rgba(227,123,29,1) 100%)",
+          },
+        }).showToast();
+      }
     })
     .catch((e) => {
       console.log(e);
