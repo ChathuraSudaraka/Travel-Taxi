@@ -13,8 +13,8 @@ $dotenv->load();
 $data = json_decode(file_get_contents("php://input"));
 
 // load data
-$message = urlencode($data->message);
-$mobile = $data->mobile;
+$message = urlencode($_POST["message"]);
+$mobile = $_POST["mobile"];
 
 // load credentials
 $mask = urlencode($_ENV['RICHMO_MASK']);

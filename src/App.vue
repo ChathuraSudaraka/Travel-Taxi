@@ -143,15 +143,14 @@ function sendMsg(number) {
   const message = setupMsg();
   const url = `${import.meta.env.VITE_BACKEND_URL}/api/sendMessage.php`;
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ message, mobile }),
-  })
-    .then((res) => res.json())
-    .then((res) => {
+  const formData = new FormData();
+  formData.append("message", message);
+  formData.append("mobile", mobile);
+
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState == 4) {
+      const res = JSON.parse(xhr.responseText);
       if (res.status == "success") {
         Toastify({
           text: "Message Sent Successfully",
@@ -173,19 +172,11 @@ function sendMsg(number) {
           },
         }).showToast();
       }
-    })
-    .catch((e) => {
-      console.log(e);
-      Toastify({
-        text: "Something Went Wrong",
-        close: true,
-        duration: 3000,
-        style: {
-          background:
-            "linear-gradient(90deg, rgba(203,0,0,1) 0%, rgba(251,30,144,1) 50%, rgba(227,123,29,1) 100%)",
-        },
-      }).showToast();
-    });
+    }
+  };
+
+  xhr.open("POST", url);
+  xhr.send(formData);
 }
 
 function reset() {
