@@ -21,8 +21,8 @@ function print() {
     },
   }).showToast();
   const doc = new jsPDF({
-    unit: "mm", // Change unit to millimeters
-    format: "a4", // Set format to A4
+    unit: "px", // Change unit to millimeters
+    format: [795, 1125], // Set format to A4
   });
 
   doc.html(printable, {
@@ -48,10 +48,7 @@ function print() {
       <div class="">
         <!-- Invoice -->
         <div id="printable_invoice" class="">
-          <img src="../../public/img/invoice-structure.png" alt="">
-
-
-
+          <img src="/img/invoice-structure.png" class="absolute w-full" />
         </div>
         <!-- End Invoice -->
       </div>
@@ -76,18 +73,16 @@ body {
   background: rgb(204, 204, 204);
 }
 
-/* Adjust styles for A4 size */
-page[size="a4"] {
+#printable_invoice {
+  position: relative;
+  width: 795px;
+  height: 1122px;
+  background-image: url("/img/invoice-structure.png");
+  background-size: contain;
   background: white;
-  width: 794px;
-  height: 1123px;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 0.5cm;
 }
 
 @media print {
-
   body,
   page[size="a4"] {
     margin: 0;
