@@ -25,6 +25,8 @@ const copy_icon = ref("md-contentcopy-round");
 const trip_id_start = ref("");
 const form = ref({
   tripId: "",
+  customerName: "",
+  customerMobile: "",
   date: "",
   time: "",
   adults: "",
@@ -38,6 +40,7 @@ const form = ref({
   distance: "",
   transportTimeH: "",
   transportTimeM: "",
+  price: ""
 });
 const pickupLocationUrl = ref("");
 const dropLocationUrl = ref("");
@@ -87,6 +90,8 @@ function setupMsg() {
   });
   const text = `
 Trip ID: ${trip_id_start.value}${form_copy.tripId}
+Customer Name: ${form_copy.customerName}
+Customer Mobile No: ${form_copy.customerMobile}
 Date: ${form_copy.date}
 Time: ${form_copy.time}
 Flight Number: ${form_copy.flightNumber}\n
@@ -98,7 +103,8 @@ Vehicle Type: ${form_copy.vehicleType}\n
 Pickup Location: ${pickupLocationUrl.value ? pickupLocationUrl.value : "N/A"}\n
 Drop Location: ${dropLocationUrl.value ? dropLocationUrl.value : "N/A"}\n
 Distance: ${form_copy.distance}KM
-Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M
+Transport Time: ${form_copy.transportTimeH}H ${form_copy.transportTimeM}M\n
+Total Price: Rs ${form_copy.price}
   `.trim();
   return text;
 }
@@ -139,13 +145,21 @@ function sendMsg(number) {
     }).showToast();
     return;
   }
-  const mobile = number;
+  var mobile = number;
   const message = setupMsg();
   const url = `${import.meta.env.VITE_BACKEND_URL}/api/sendMessage.php`;
 
   const formData = new FormData();
   formData.append("message", message);
   formData.append("mobile", mobile);
+
+  // remove spaces in mobile and also remove first character if it's +
+  mobile = mobile.replace(/\s/g, "");
+  if (mobile[0] == "+") {
+    mobile = mobile.slice(1);
+  }
+
+  console.log(mobile);
 
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = () => {
@@ -182,6 +196,8 @@ function sendMsg(number) {
 function reset() {
   form.value = {
     tripId: "",
+    customerName: "",
+    customerMobile: "",
     date: "",
     time: "",
     adults: "",
@@ -195,6 +211,7 @@ function reset() {
     distance: "",
     transportTimeH: "",
     transportTimeM: "",
+    price: ""
   };
   pickupLocationUrl.value = "";
   dropLocationUrl.value = "";
@@ -309,6 +326,23 @@ function showInvoice() {
           </div>
           <!-- Flight number End -->
 
+          <!-- Customer Start -->
+          <div class="col-span-12 md:col-span-6">
+            <PrimaryInput
+              label="Customer Name"
+              placeholder="Enter the customer name"
+              v-model="form.customerName"
+            />
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <PrimaryInput
+              label="Customer Mobile No"
+              placeholder="Enter the customer mobile number"
+              v-model="form.customerMobile"
+            />
+          </div>
+          <!-- Customer End -->
+
           <!-- Trip Date & Time Start -->
           <div class="col-span-12 md:col-span-6 lg:col-span-3">
             <PrimaryInput label="Date" type="date" v-model="form.date" />
@@ -365,7 +399,7 @@ function showInvoice() {
           <!-- Baggages Start -->
 
           <!-- Location Start -->
-          <div class="col-span-12 md:col-span-6">
+          <div class="col-span-12 md:col-span-4">
             <label class="form-control w-full">
               <div class="label uppercase">
                 <span class="label-text">Pickup location</span>
@@ -378,7 +412,7 @@ function showInvoice() {
               </div>
             </label>
           </div>
-          <div class="col-span-12 md:col-span-6">
+          <div class="col-span-12 md:col-span-4">
             <label class="form-control w-full">
               <div class="label uppercase">
                 <span class="label-text">Drop location</span>
@@ -392,6 +426,16 @@ function showInvoice() {
             </label>
           </div>
           <!-- Location End -->
+
+          <!-- Price STart -->
+          <div class="col-span-12 md:col-span-4">
+            <PrimaryInput
+              label="Price"
+              placeholder="Enter The Price"
+              v-model="form.price"
+            />
+          </div>
+          <!-- Price End -->
 
           <!-- Surfboard Start -->
           <div class="col-span-12 md:col-span-3">

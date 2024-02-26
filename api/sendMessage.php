@@ -9,9 +9,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
-// decode json request
-$data = json_decode(file_get_contents("php://input"));
-
 // load data
 $message = urlencode($_POST["message"]);
 $mobile = $_POST["mobile"];
