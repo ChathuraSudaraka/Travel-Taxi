@@ -73,8 +73,8 @@ onMounted(() => {
         if (!place.geometry) {
           alert(
             "No details available for input: '" +
-              place.name +
-              "'. Please Try Again !"
+            place.name +
+            "'. Please Try Again !"
           );
           return;
         }
@@ -127,12 +127,7 @@ async function getLocation() {
           <div class="label uppercase">
             <span class="label-text">Address</span>
           </div>
-          <input
-            type="text"
-            placeholder="Enter The Address"
-            class="input input-bordered w-full"
-            ref="streetRef"
-          />
+          <input type="text" placeholder="Enter The Address" class="input input-bordered w-full" ref="streetRef" />
         </label>
         <div class="mt-4 w-full h-[400px]" :id="`${uniqueId}-googlemap`"></div>
       </div>
