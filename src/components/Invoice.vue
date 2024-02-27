@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 import Toastify from "toastify-js";
 
 const props = defineProps({
-  items: {
+  options: {
     type: Object,
     required: true,
   },
@@ -55,15 +55,21 @@ function print() {
                 <div class="flex flex-col pt-3">
                   <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Invoice Id:</div>
-                    <div class="text-gray-500">BRA-00335</div>
+                    <div class="text-gray-500">TID-{{ options.tripId }}</div>
                   </div>
                   <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Invoiced Date:</div>
-                    <div class="text-gray-500">feb 26, 2024</div>
+                    <div class="text-gray-500">
+                      {{ new Date().toLocaleDateString() }}
+                    </div>
                   </div>
                   <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Due Date :</div>
-                    <div class="text-gray-500">feb 30, 2024</div>
+                    <div class="text-gray-500">
+                      {{
+                        new Date(new Date().getDate() + 7).toLocaleDateString()
+                      }}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -81,8 +87,8 @@ function print() {
                 <p class="font-bold uppercase text-gray-700">
                   Customer Details
                 </p>
-                <p><strong>Name:</strong> Chathura Sudaraka</p>
-                <p><strong>Number:</strong> +94 705321516</p>
+                <p><strong>Name:</strong> {{ options.customerName }}</p>
+                <p><strong>Number:</strong> {{ options.customerMobile }}</p>
               </div>
             </div>
 
@@ -97,11 +103,13 @@ function print() {
                 <tbody>
                   <tr>
                     <td class="border-b py-3 pl-3">Trip Id</td>
-                    <td class="border-b py-3 pl-2">120120</td>
+                    <td class="border-b py-3 pl-2">{{ options.tripId }}</td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Date & Time</td>
-                    <td class="border-b py-3 pl-2">2024 Dec 12, 10:00 AM</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.date }}, {{ options.time }}
+                    </td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Passengers</td>
@@ -109,38 +117,63 @@ function print() {
                       <div class="w-full grid grid-cols-2">
                         <div class="flex gap-2">
                           <div class="text-gray-600">Adults:</div>
-                          <div class="text-gray-500">5</div>
+                          <div class="text-gray-500">{{ options.adults }}</div>
                         </div>
                         <div class="flex gap-2">
                           <div class="text-gray-600">Children:</div>
-                          <div class="text-gray-500">2</div>
+                          <div class="text-gray-500">
+                            {{ options.children }}
+                          </div>
                         </div>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Vehicle Type</td>
-                    <td class="border-b py-3 pl-2">Buddy Van</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.vehicleType }}
+                    </td>
                   </tr>
                   <tr>
-                    <td class="border-b py-3 pl-3">Baggages</td>
-                    <td class="border-b py-3 pl-2">5</td>
+                    <td class="border-b py-3 pl-3">Accessories</td>
+                    <td class="border-b py-3 pl-2">
+                      <div class="w-full grid grid-cols-2">
+                        <div class="flex gap-2">
+                          <div class="text-gray-600">Baggages:</div>
+                          <div class="text-gray-500">
+                            {{ options.baggages }}
+                          </div>
+                        </div>
+                        <div class="flex gap-2">
+                          <div class="text-gray-600">Surfboard:</div>
+                          <div class="text-gray-500">
+                            {{ options.surfboard }}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Pickup Location</td>
-                    <td class="border-b py-3 pl-2">120120</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.pickupLocation }}
+                    </td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Drop Location</td>
-                    <td class="border-b py-3 pl-2">120120</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.dropLocation }}
+                    </td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Total Distance</td>
-                    <td class="border-b py-3 pl-2">120120</td>
+                    <td class="border-b py-3 pl-2">{{ options.distance }}</td>
                   </tr>
                   <tr>
                     <td class="border-b py-3 pl-3">Transport Time</td>
-                    <td class="border-b py-3 pl-2">5H 23M</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.transportTimeH }}H {{ transportTimeM }}M
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -154,10 +187,7 @@ function print() {
                       <div
                         class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center"
                       >
-                        <img 
-                          src="/img/icons/phone.png"
-                          class="w-[13px]"
-                        />
+                        <img src="/img/icons/phone.png" class="w-[13px]" />
                       </div>
                       <p>+94 77 111 2223</p>
                     </span>
@@ -165,10 +195,7 @@ function print() {
                       <div
                         class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center"
                       >
-                      <img 
-                          src="/img/icons/email.png"
-                          class="w-[13px]"
-                        />
+                        <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
                       <p>johndoe@example.com</p>
                     </span>
@@ -184,7 +211,9 @@ function print() {
                     class="border-t border-t-gray-300 col-span-full grid grid-cols-2 p-3"
                   >
                     <div class="font-bold">Sub Total:</div>
-                    <div class="">Rs. 800.00</div>
+                    <div class="">
+                      Rs. {{ parseInt(options.price) - 200 }}.00
+                    </div>
                   </div>
                   <div
                     class="border-t border-t-gray-300 col-span-full grid grid-cols-2 p-3"
@@ -197,7 +226,7 @@ function print() {
                       Total:
                     </div>
                     <div class="whitespace-nowrap font-bold text-white">
-                      Rs. 1000.00
+                      Rs. {{ options.price }}.00
                     </div>
                   </div>
                   <div class="col-span-full flex flex-col items-center mt-3">

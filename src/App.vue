@@ -548,7 +548,7 @@ function showInvoice() {
       @get-location="setDropLocation"
       unique-id="drop-location"
     />
-    <Invoice :items="printable" />
+    <Invoice :options="printable" />
     <NumberModal @send="sendMsg" />
     <ToggleTheme />
   </div>
