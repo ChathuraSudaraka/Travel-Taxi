@@ -31,6 +31,16 @@ function print() {
     },
   });
 }
+
+function formatDate(date) {
+  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month.toUpperCase()} ${year}`;
+}
 </script>
 
 <template>
@@ -60,14 +70,14 @@ function print() {
                   <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Invoiced Date:</div>
                     <div class="text-gray-500">
-                      {{ new Date().toLocaleDateString() }}
+                      {{ formatDate(new Date()) }}
                     </div>
                   </div>
                   <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Due Date :</div>
                     <div class="text-gray-500">
                       {{
-                        new Date(new Date().getDate() + 7).toLocaleDateString()
+                        formatDate(new Date(new Date().setDate(new Date().getDate() + 7)))
                       }}
                     </div>
                   </div>
@@ -108,7 +118,7 @@ function print() {
                   <tr>
                     <td class="border-b py-3 pl-3">Date & Time</td>
                     <td class="border-b py-3 pl-2">
-                      {{ options.date }}, {{ options.time }}
+                      {{ formatDate(new Date(options.date)) }}, {{ options.time }}
                     </td>
                   </tr>
                   <tr>
@@ -201,7 +211,7 @@ function print() {
                     </span>
                   </div>
                   <p class="mt-3">
-                    Please send payment within 30 days of receiving this
+                    Please send payment within 24 hours of receiving this
                     invoice. There will be 10% interest charge per month on late
                     invoice.
                   </p>
