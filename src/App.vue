@@ -40,7 +40,7 @@ const form = ref({
   distance: "",
   transportTimeH: "",
   transportTimeM: "",
-  price: ""
+  price: "",
 });
 const pickupLocationUrl = ref("");
 const dropLocationUrl = ref("");
@@ -211,7 +211,7 @@ function reset() {
     distance: "",
     transportTimeH: "",
     transportTimeM: "",
-    price: ""
+    price: "",
   };
   pickupLocationUrl.value = "";
   dropLocationUrl.value = "";
@@ -378,7 +378,7 @@ function showInvoice() {
           <!-- Passengers End -->
 
           <!-- Vehicle Type Start -->
-          <div class="col-span-6 md:col-span-6 lg:col-span-6 flex flex-col">
+          <div class="col-span-6 md:col-span-6 lg:col-span-4 flex flex-col">
             <PrimarySelect
               label="Vehicle Type"
               placeholder="Select Vehicle Type"
@@ -389,7 +389,7 @@ function showInvoice() {
           <!-- Vehicle Type End -->
 
           <!-- Baggages Start -->
-          <div class="col-span-6 md:col-span-12 lg:col-span-6">
+          <div class="col-span-6 md:col-span-6 lg:col-span-4">
             <PrimaryInput
               label="Baggages"
               placeholder="Enter Baggages"
@@ -398,47 +398,8 @@ function showInvoice() {
           </div>
           <!-- Baggages Start -->
 
-          <!-- Location Start -->
-          <div class="col-span-12 md:col-span-4">
-            <label class="form-control w-full">
-              <div class="label uppercase">
-                <span class="label-text">Pickup location</span>
-              </div>
-              <div
-                @click="pickup_modal = true"
-                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
-              >
-                {{ form.pickupLocation }}
-              </div>
-            </label>
-          </div>
-          <div class="col-span-12 md:col-span-4">
-            <label class="form-control w-full">
-              <div class="label uppercase">
-                <span class="label-text">Drop location</span>
-              </div>
-              <div
-                @click="drop_modal = true"
-                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
-              >
-                {{ form.dropLocation }}
-              </div>
-            </label>
-          </div>
-          <!-- Location End -->
-
-          <!-- Price STart -->
-          <div class="col-span-12 md:col-span-4">
-            <PrimaryInput
-              label="Price"
-              placeholder="Enter The Price"
-              v-model="form.price"
-            />
-          </div>
-          <!-- Price End -->
-
           <!-- Surfboard Start -->
-          <div class="col-span-12 md:col-span-3">
+          <div class="col-span-12 md:col-span-6 lg:col-span-4">
             <label for="surfboard" class="label text-sm uppercase"
               >Surfboard</label
             >
@@ -468,8 +429,47 @@ function showInvoice() {
           </div>
           <!-- Surfboard End -->
 
+          <!-- Location Start -->
+          <div class="col-span-12 md:col-span-6">
+            <label class="form-control w-full">
+              <div class="label uppercase">
+                <span class="label-text">Pickup location</span>
+              </div>
+              <div
+                @click="pickup_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
+                {{ form.pickupLocation }}
+              </div>
+            </label>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <label class="form-control w-full">
+              <div class="label uppercase">
+                <span class="label-text">Drop location</span>
+              </div>
+              <div
+                @click="drop_modal = true"
+                class="w-full whitespace-nowrap cursor-pointer h-[3rem] rounded-lg flex items-center px-5 overflow-x-scroll bg-gray-200 dark:bg-[#1d232a] border border-gray-300 dark:border-gray-700"
+              >
+                {{ form.dropLocation }}
+              </div>
+            </label>
+          </div>
+          <!-- Location End -->
+
+          <!-- Price STart -->
+          <!-- <div class="col-span-12 md:col-span-4">
+            <PrimaryInput
+              label="Price"
+              placeholder="Enter The Price"
+              v-model="form.price"
+            />
+          </div> -->
+          <!-- Price End -->
+
           <!-- Distance Start -->
-          <div class="col-span-12 md:col-span-3">
+          <div class="col-span-12 md:col-span-4 lg:col-span-3">
             <PrimaryInput
               label="Total Distance"
               placeholder="Enter The Distance"
@@ -480,7 +480,7 @@ function showInvoice() {
           <!-- Distance End -->
 
           <!-- Time Start -->
-          <div class="col-span-12 md:col-span-6">
+          <div class="col-span-12 md:col-span-8 lg:col-span-5">
             <label for="time" class="label uppercase text-sm"
               >Transport Time</label
             >
@@ -506,6 +506,16 @@ function showInvoice() {
             </div>
           </div>
           <!-- Time End -->
+
+          <!-- Pricing Start -->
+          <div class="col-span-12 lg:col-span-4">
+            <PrimaryInput
+              label="Price"
+              placeholder="Enter The Price"
+              v-model="form.price"
+            />
+          </div>
+          <!-- Pricing End -->
 
           <!-- Button Set Start -->
           <div

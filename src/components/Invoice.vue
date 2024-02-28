@@ -27,19 +27,36 @@ function print() {
 
   doc.html(printable, {
     callback: function (pdf) {
-      pdf.save(`transfer-${props.items.tripId}.pdf`);
+      pdf.save(`transfer-${props.options.tripId}.pdf`);
     },
   });
 }
 
 function formatDate(date) {
-  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
-  
-  const day = String(date.getDate()).padStart(2, '0');
+  const isDate = Object.prototype.toString.call(date) === "[object Date]";
+  if (!isDate) {
+    return;
+  }
+  const months = [
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
+  const day = String(date.getDate()).padStart(2, "0");
   const month = months[date.getMonth()];
   const year = date.getFullYear();
 
-  return `${day} ${month.toUpperCase()} ${year}`;
+  return `${day} ${month?.toUpperCase()} ${year}`;
 }
 </script>
 
@@ -58,27 +75,23 @@ function formatDate(date) {
           <img src="/img/invoice-structure.jpg" class="absolute w-full" />
           <div class="relative">
             <div class="px-14 py-5" id="top-position">
-              <div class="grid grid-cols-2">
-                <div class="pt-2">
+              <div class="grid grid-cols-5">
+                <div class="pt-2 col-span-2">
                   <img src="/img/machanlogo.png" id="logo" />
                 </div>
-                <div class="flex flex-col pt-3">
-                  <div class="grid grid-cols-2">
+                <div class="col-span-3 flex flex-col pt-3">
+                  <div class="grid grid-cols-3">
                     <div class="text-gray-800 font-bold">Invoice Id:</div>
-                    <div class="text-gray-500">TID-{{ options.tripId }}</div>
-                  </div>
-                  <div class="grid grid-cols-2">
+                    <div class="col-span-2 text-gray-500">
+                      TID-{{ options.tripId }}
+                    </div>
                     <div class="text-gray-800 font-bold">Invoiced Date:</div>
-                    <div class="text-gray-500">
+                    <div class="col-span-2 text-gray-500">
                       {{ formatDate(new Date()) }}
                     </div>
-                  </div>
-                  <div class="grid grid-cols-2">
                     <div class="text-gray-800 font-bold">Due Date :</div>
-                    <div class="text-gray-500">
-                      {{
-                        formatDate(new Date(new Date().setDate(new Date().getDate() + 7)))
-                      }}
+                    <div class="col-span-2 text-gray-500">
+                      {{ formatDate(new Date(options.date)) }}
                     </div>
                   </div>
                 </div>
@@ -86,19 +99,25 @@ function formatDate(date) {
             </div>
 
             <div
-              class="grid grid-cols-3 bg-orange-100 text-gray-700 px-14 py-3 text-sm"
+              class="grid grid-cols-2 bg-orange-100 text-gray-700 px-14 py-3 text-sm"
             >
-              <div class="col-span-2 flex-col gap-1">
-                <p><strong>Phone:</strong> +94 705321516</p>
-                <p><strong>Email:</strong> example@gmail.com</p>
-                <p><strong>Addres:</strong> Example, 117 road</p>
+              <div class="flex flex-col gap-1">
+                <p class="font-bold text-orange-500 text-[16px]">machanTAXI</p>
+                <p>Reliable budget taxi service in Sri Lanka</p>
+                <div class="flex-col gap-1">
+                  <p>
+                    <strong class="mr-2">Website: </strong
+                    ><a href="https://www.machantaxi.com">www.machantaxi.com</a>
+                  </p>
+                  <p><strong class="mr-2">FB: </strong>machantaxi</p>
+                </div>
               </div>
               <div class="flex flex-col gap-1">
                 <p class="font-bold uppercase text-gray-700">
                   Customer Details
                 </p>
                 <p><strong>Name:</strong> {{ options.customerName }}</p>
-                <p><strong>Number:</strong> {{ options.customerMobile }}</p>
+                <p><strong>T/P:</strong> {{ options.customerMobile }}</p>
               </div>
             </div>
 
@@ -106,8 +125,9 @@ function formatDate(date) {
               <table class="w-full border-collapse border-spacing-0">
                 <thead class="bg-[#ff5801] text-white">
                   <tr>
-                    <td class="font-bold uppercase text-md px-5 py-2">Label</td>
-                    <td class="font-bold uppercase text-md px-5 py-2">Value</td>
+                    <th colspan="2" class="uppercase text-md py-2">
+                      Description
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -116,9 +136,16 @@ function formatDate(date) {
                     <td class="border-b py-3 pl-2">{{ options.tripId }}</td>
                   </tr>
                   <tr>
+                    <td class="border-b py-3 pl-3">Fight Number</td>
+                    <td class="border-b py-3 pl-2">
+                      {{ options.flightNumber }}
+                    </td>
+                  </tr>
+                  <tr>
                     <td class="border-b py-3 pl-3">Date & Time</td>
                     <td class="border-b py-3 pl-2">
-                      {{ formatDate(new Date(options.date)) }}, {{ options.time }}
+                      {{ formatDate(new Date(options.date)) }},
+                      {{ options.time }}
                     </td>
                   </tr>
                   <tr>
@@ -145,8 +172,7 @@ function formatDate(date) {
                     </td>
                   </tr>
                   <tr>
-                    <td class="border-b py-3 pl-3">Accessories</td>
-                    <td class="border-b py-3 pl-2">
+                    <td colspan="2" class="border-b py-3 pl-2">
                       <div class="w-full grid grid-cols-2">
                         <div class="flex gap-2">
                           <div class="text-gray-600">Baggages:</div>
@@ -182,7 +208,8 @@ function formatDate(date) {
                   <tr>
                     <td class="border-b py-3 pl-3">Transport Time</td>
                     <td class="border-b py-3 pl-2">
-                      {{ options.transportTimeH }}H {{ transportTimeM }}M
+                      {{ options.transportTimeH }}H
+                      {{ options.transportTimeM }}M
                     </td>
                   </tr>
                 </tbody>
@@ -199,7 +226,7 @@ function formatDate(date) {
                       >
                         <img src="/img/icons/phone.png" class="w-[13px]" />
                       </div>
-                      <p>+94 77 111 2223</p>
+                      <p>+94 71 780 0600 (Whatsapp Hotline)</p>
                     </span>
                     <span class="flex gap-3">
                       <div
@@ -207,31 +234,27 @@ function formatDate(date) {
                       >
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
-                      <p>johndoe@example.com</p>
+                      <p>machantaxisrilanka@gmail.com</p>
                     </span>
                   </div>
                   <p class="mt-3">
-                    Please send payment within 24 hours of receiving this
-                    invoice. There will be 10% interest charge per month on late
-                    invoice.
+                    We appreciate your business.
+                    <span class="font-semibold">
+                      This is a computer-generated invoice and does not require
+                      a signature. </span
+                    >. If you have any questions, please do not hesitate to
+                    contact us. Also refer our
+                    <a
+                      href="https://machan.store/tos.html"
+                      class="text-blue-500"
+                      >Terms & Conditions</a
+                    >
                   </p>
                 </div>
-                <div class="col-span-5 grid grid-cols-2 p-3">
+                <div class="col-span-5 grid place-items-start grid-cols-2 p-3">
                   <div
-                    class="border-t border-t-gray-300 col-span-full grid grid-cols-2 p-3"
+                    class="w-full bg-[#ff5801] col-span-full grid grid-cols-2 p-3"
                   >
-                    <div class="font-bold">Sub Total:</div>
-                    <div class="">
-                      Rs. {{ parseInt(options.price) - 200 }}.00
-                    </div>
-                  </div>
-                  <div
-                    class="border-t border-t-gray-300 col-span-full grid grid-cols-2 p-3"
-                  >
-                    <div class="font-bold">Net Vat:</div>
-                    <div class="">Rs. 200.00</div>
-                  </div>
-                  <div class="bg-[#ff5801] col-span-full grid grid-cols-2 p-3">
                     <div class="whitespace-nowrap font-bold text-white">
                       Total:
                     </div>
@@ -239,18 +262,17 @@ function formatDate(date) {
                       Rs. {{ options.price }}.00
                     </div>
                   </div>
-                  <div class="col-span-full flex flex-col items-center mt-3">
-                    <div
-                      class="w-full border-b border-b-gray-400 border-dashed flex justify-center pb-2"
-                    >
-                      <img
-                        src="/img/signature.png"
-                        alt="signature"
-                        class="h-10"
-                      />
+                  <div class="w-full col-span-full mt-3">
+                    <h3 class="text-[#ff5801] font-bold">Payment Methods</h3>
+                    <div class="pl-3 mt-2">
+                      <ul>
+                        <li class="list-disc">Cash To Driver (LKR Only)</li>
+                        <li class="list-disc">
+                          Online card payment (accept USD, charge extra 5%)
+                        </li>
+                        <li class="list-disc">Cryptocurrency Payment (USDT)</li>
+                      </ul>
                     </div>
-                    <p class="text-[#ff5801] mt-2 italic">John Doe</p>
-                    <p class="font-bold">COMPANY CEO</p>
                   </div>
                 </div>
               </div>
