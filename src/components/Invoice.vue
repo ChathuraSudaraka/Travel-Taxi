@@ -169,7 +169,8 @@ function formatDate(date) {
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="2" class="border-b py-3 pl-2">
+                    <td class="border-b py-3 pl-3">Accessories</td>
+                    <td class="border-b py-3 pl-2">
                       <div class="w-full grid grid-cols-2">
                         <div class="flex gap-2">
                           <div class="text-gray-600">Baggages:</div>
