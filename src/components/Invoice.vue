@@ -214,20 +214,20 @@ function formatDate(date) {
               <div class="grid grid-cols-12 mt-3">
                 <div class="col-span-7 flex flex-col">
                   <h3 class="text-[#ff5801] text-lg font-bold">
-                    THANK&nbsp;&nbsp;FOR&nbsp;&nbsp;YOUR&nbsp;&nbsp;YOUR&nbsp;&nbsp;BUSINESS
+                    THANK&nbsp;&nbsp;FOR&nbsp;&nbsp;YOUR&nbsp;&nbsp;BUSINESS
                   </h3>
                   <div class="flex flex-col px-5 gap-2 mt-2">
                     <span class="flex gap-3">
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/phone.png" class="w-[13px]" />
                       </div>
-                      <p>+94 71 780 0600 (Whatsapp Hotline)</p>
+                      <p>+94 71 780 0600 (Whatsapp Hotline&rpar;</p>
                     </span>
                     <span class="flex gap-3">
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
-                      <p>machantaxisrilanka@gmail.com</p>
+                      <h1>machantaxisrilanka&commat;gmail&period;com</h1>
                     </span>
                   </div>
                   <p class="mt-3">
