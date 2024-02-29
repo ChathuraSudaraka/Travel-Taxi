@@ -228,7 +228,7 @@ function formatDate(date) {
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
-                      <p>machantaxisrilanka&commat;gmail&period;com</p>
+                      <p id="letterSpace">machantaxisrilanka&commat;gmail&period;com</p>
                     </span>
                   </div>
                   <p class="mt-3">
@@ -294,6 +294,9 @@ function formatDate(date) {
   background: white;
 }
 
+#letterSpace{
+  letter-spacing: 0.1px;
+}
 #top-position {
   padding-top: 100px;
 }
