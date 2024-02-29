@@ -98,23 +98,20 @@ function formatDate(date) {
               </div>
             </div>
 
-            <div
-              class="grid grid-cols-2 bg-orange-100 text-gray-700 px-14 py-3 text-sm"
-            >
+            <div class="grid grid-cols-2 bg-orange-100 text-gray-700 px-14 py-3 text-sm">
               <div class="flex flex-col gap-1">
                 <p class="font-bold text-orange-500 text-[16px]">machanTAXI</p>
                 <p>Reliable budget taxi service in Sri Lanka</p>
                 <div class="flex-col gap-1">
                   <p>
-                    <strong class="mr-2">Website: </strong
-                    ><a href="https://www.machantaxi.com">www.machantaxi.com</a>
+                    <strong class="mr-2">Website: </strong><a href="https://www.machantaxi.com">www.machantaxi.com</a>
                   </p>
                   <p><strong class="mr-2">FB: </strong>machantaxi</p>
                 </div>
               </div>
               <div class="flex flex-col gap-1">
                 <p class="font-bold uppercase text-gray-700">
-                  Customer Details
+                  Customer&nbsp;&nbsp;Details
                 </p>
                 <p><strong>Name:</strong> {{ options.customerName }}</p>
                 <p><strong>T/P:</strong> {{ options.customerMobile }}</p>
@@ -125,7 +122,7 @@ function formatDate(date) {
               <table class="w-full border-collapse border-spacing-0">
                 <thead class="bg-[#ff5801] text-white">
                   <tr>
-                    <th colspan="2" class="uppercase text-md py-2">
+                    <th colspan="2" class="uppercase text-md p-2">
                       Description
                     </th>
                   </tr>
@@ -217,21 +214,17 @@ function formatDate(date) {
               <div class="grid grid-cols-12 mt-3">
                 <div class="col-span-7 flex flex-col">
                   <h3 class="text-[#ff5801] text-lg font-bold">
-                    THANK YOU FOR YOUR BUSINESS
+                    THANK&nbsp;&nbsp;FOR&nbsp;&nbsp;YOUR&nbsp;&nbsp;YOUR&nbsp;&nbsp;BUSINESS
                   </h3>
                   <div class="flex flex-col px-5 gap-2 mt-2">
                     <span class="flex gap-3">
-                      <div
-                        class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center"
-                      >
+                      <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/phone.png" class="w-[13px]" />
                       </div>
                       <p>+94 71 780 0600 (Whatsapp Hotline)</p>
                     </span>
                     <span class="flex gap-3">
-                      <div
-                        class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center"
-                      >
+                      <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
                       <p>machantaxisrilanka@gmail.com</p>
@@ -241,20 +234,13 @@ function formatDate(date) {
                     We appreciate your business.
                     <span class="font-semibold">
                       This is a computer-generated invoice and does not require
-                      a signature. </span
-                    >. If you have any questions, please do not hesitate to
+                      a signature. </span>. If you have any questions, please do not hesitate to
                     contact us. Also refer our
-                    <a
-                      href="https://machan.store/tos.html"
-                      class="text-blue-500"
-                      >Terms & Conditions</a
-                    >
+                    <a href="https://machan.store/tos.html" class="text-blue-500">Terms & Conditions</a>
                   </p>
                 </div>
                 <div class="col-span-5 grid place-items-start grid-cols-2 p-3">
-                  <div
-                    class="w-full bg-[#ff5801] col-span-full grid grid-cols-2 p-3"
-                  >
+                  <div class="w-full bg-[#ff5801] col-span-full grid grid-cols-2 p-3">
                     <div class="whitespace-nowrap font-bold text-white">
                       Total:
                     </div>
