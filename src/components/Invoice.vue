@@ -30,9 +30,9 @@ function print() {
 
       // Add a hyperlink to the generated PDF
       pdf.textWithLink(
-        "Terms & Conditions", // Text to display
-        57, // X coordinate
-        1015, // Y coordinate
+        "HERE", // Text to display
+        180, // X coordinate
+        1016, // Y coordinate
         {
           url: "https://machan.store/tos.html", // URL to link
           target: "_blank", // Open in a new tab
@@ -249,7 +249,7 @@ function formatDate(date) {
                       This is a computer-generated invoice and does not require
                       a signature. </span>. If you have any questions, please do not hesitate to
                     contact us. Also refer our
-                    <!-- <a href="https://machan.store/tos.html" class="text-blue-500">Terms & Conditions</a> -->
+                    <a href="https://machan.store/tos.html" class="text-blue-500">Terms & Conditions</a>
                   </p>
                 </div>
                 <div class="col-span-5 grid place-items-start grid-cols-2 p-3">
