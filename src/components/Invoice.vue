@@ -104,7 +104,8 @@ function formatDate(date) {
                 <p>Reliable budget taxi service in Sri Lanka</p>
                 <div class="flex-col gap-1">
                   <p>
-                    <strong class="mr-2">Website: </strong><a href="https://www.machantaxi.com">www.machantaxi.com</a>
+                    <strong class="mr-2">Website: </strong><a href="https://www.machantaxi.com"
+                      id="letterSpace">www.machantaxi.com</a>
                   </p>
                   <p><strong class="mr-2">FB: </strong>machantaxi</p>
                 </div>
@@ -294,9 +295,10 @@ function formatDate(date) {
   background: white;
 }
 
-#letterSpace{
+#letterSpace {
   letter-spacing: 0.1px;
 }
+
 #top-position {
   padding-top: 100px;
 }
