@@ -25,16 +25,12 @@ function print() {
     format: [795, 1125], // Set format to A4
   });
 
-  doc.setFontSize(16);
-
-  doc.setTextColor(0, 0, 255);
-
   doc.html(printable, {
     callback: function (pdf) {
 
       // Add a hyperlink to the generated PDF
       pdf.textWithLink(
-        "Terms & Conditions",cas // Text to display
+        "Terms & Conditions", // Text to display
         57, // X coordinate
         1015, // Y coordinate
         {
