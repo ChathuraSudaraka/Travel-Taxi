@@ -222,13 +222,13 @@ function formatDate(date) {
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/phone.png" class="w-[13px]" />
                       </div>
-                      <p>+94 71 780 0600 (Whatsapp Hotline&rpar;</p>
+                      <p id="letterSpace">+94 71 780 0600 (Whatsapp Hotline)</p>
                     </span>
                     <span class="flex gap-3">
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
-                      <p id="letterSpace">machantaxisrilanka&commat;gmail&period;com</p>
+                      <p id="letterSpace">machantaxisrilanka@gmail.com</p>
                     </span>
                   </div>
                   <p class="mt-3">
