@@ -214,8 +214,8 @@ function formatDate(date) {
               </table>
               <div class="grid grid-cols-12 mt-3">
                 <div class="col-span-7 flex flex-col">
-                  <h3 class="text-[#ff5801] text-lg font-bold">
-                    THANK&nbsp;&nbsp;FOR&nbsp;&nbsp;YOUR&nbsp;&nbsp;BUSINESS
+                  <h3 class="text-[#ff5801] text-lg font-bold" id="letterSpace">
+                    THANK FOR YOUR BUSINESS
                   </h3>
                   <div class="flex flex-col px-5 gap-2 mt-2">
                     <span class="flex gap-3">
