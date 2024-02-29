@@ -227,7 +227,7 @@ function formatDate(date) {
                       <div class="p-[5px] bg-[#ff5801] rounded-full flex justify-center items-center">
                         <img src="/img/icons/email.png" class="w-[13px]" />
                       </div>
-                      <h1>machantaxisrilanka&commat;gmail&period;com</h1>
+                      <p>machantaxisrilanka&commat;gmail&period;com</p>
                     </span>
                   </div>
                   <p class="mt-3">
