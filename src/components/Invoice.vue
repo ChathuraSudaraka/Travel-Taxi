@@ -31,7 +31,7 @@ function print() {
       // Add a hyperlink to the generated PDF
       pdf.textWithLink(
         "HERE", // Text to display
-        180, // X coordinate
+        185, // X coordinate
         1016, // Y coordinate
         {
           url: "https://machan.store/tos.html", // URL to link
@@ -83,7 +83,7 @@ function formatDate(date) {
       <div class="p-5">
         <!-- Invoice -->
         <div id="printable_invoice" class="">
-          <img src="/img/invoice-structure.jpg" class="absolute w-full" />
+          <img src="/img/invoice-structure_new.jpg" class="absolute w-full" />
           <div class="relative">
             <div class="px-14 py-5" id="top-position">
               <div class="grid grid-cols-5">
@@ -243,7 +243,7 @@ function formatDate(date) {
                       <p id="letterSpace">machantaxisrilanka@gmail.com</p>
                     </span>
                   </div>
-                  <p class="mt-3">
+                  <p class="mt-3" id="letterSpace">
                     We appreciate your business.
                     <span class="font-semibold">
                       This is a computer generated invoice and does not require
