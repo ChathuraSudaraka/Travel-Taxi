@@ -246,8 +246,8 @@ function formatDate(date) {
                   <p class="mt-3">
                     We appreciate your business.
                     <span class="font-semibold">
-                      This is a computer-generated invoice and does not require
-                      a signature. </span>. If you have any questions, please do not hesitate to
+                      This is a computer generated invoice and does not require
+                      a signature. </span>If you have any questions, Please do not hesitate to
                     contact us. Also refer our
                     <a href="https://machan.store/tos.html" class="text-blue-500">Terms & Conditions</a>
                   </p>
