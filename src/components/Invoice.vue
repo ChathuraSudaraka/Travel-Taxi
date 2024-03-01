@@ -38,6 +38,24 @@ function print() {
           target: "_blank", // Open in a new tab
         }
       );
+      pdf.textWithLink(
+        "Visit", // Text to display
+        650, // X coordinate
+        670, // Y coordinate
+        {
+          url: props.options.pickupLocationUrl, // URL to link
+          target: "_blank", // Open in a new tab
+        }
+      );
+      pdf.textWithLink(
+        "Visit", // Text to display
+        650, // X coordinate
+        717, // Y coordinate
+        {
+          url: props.options.dropLocationUrl, // URL to link
+          target: "_blank", // Open in a new tab
+        }
+      );
       pdf.save(`transfer-${props.options.tripId}.pdf`);
     },
   });
