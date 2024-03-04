@@ -90,33 +90,33 @@ function getPaidPDF() {
   paid_doc.html(paid, {
     callback: function (pdf) {
       // Add a hyperlink to the generated PDF
-      pdf.textWithLink(
-        "HERE", // Text to display
-        185, // X coordinate
-        1016, // Y coordinate
-        {
-          url: "https://machan.store/tos.html", // URL to link
-          target: "_blank", // Open in a new tab
-        }
-      );
-      pdf.textWithLink(
-        "Visit", // Text to display
-        650, // X coordinate
-        670, // Y coordinate
-        {
-          url: props.options.pickupLocationUrl, // URL to link
-          target: "_blank", // Open in a new tab
-        }
-      );
-      pdf.textWithLink(
-        "Visit", // Text to display
-        650, // X coordinate
-        717, // Y coordinate
-        {
-          url: props.options.dropLocationUrl, // URL to link
-          target: "_blank", // Open in a new tab
-        }
-      );
+      // pdf.textWithLink(
+      //   "HERE", // Text to display
+      //   185, // X coordinate
+      //   1016, // Y coordinate
+      //   {
+      //     url: "https://machan.store/tos.html", // URL to link
+      //     target: "_blank", // Open in a new tab
+      //   }
+      // );
+      // pdf.textWithLink(
+      //   "Visit", // Text to display
+      //   650, // X coordinate
+      //   670, // Y coordinate
+      //   {
+      //     url: props.options.pickupLocationUrl, // URL to link
+      //     target: "_blank", // Open in a new tab
+      //   }
+      // );
+      // pdf.textWithLink(
+      //   "Visit", // Text to display
+      //   650, // X coordinate
+      //   717, // Y coordinate
+      //   {
+      //     url: props.options.dropLocationUrl, // URL to link
+      //     target: "_blank", // Open in a new tab
+      //   }
+      // );
       pdf.save(`transfer-${props.options.tripId}-paid.pdf`);
     },
   });
