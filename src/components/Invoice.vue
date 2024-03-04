@@ -41,7 +41,7 @@ function getUnpaidPDF() {
         185, // X coordinate
         1016, // Y coordinate
         {
-          url: "https://machan.store/tos.html", // URL to link
+          url: "https://machantaxi.com/tos.html", // URL to link
           target: "_blank", // Open in a new tab
         }
       );
@@ -95,7 +95,7 @@ function getPaidPDF() {
         185, // X coordinate
         607, // Y coordinate
         {
-          url: "https://machan.store/tos.html", // URL to link
+          url: "https://machantaxi.com/tos.html", // URL to link
           target: "_blank", // Open in a new tab
         }
       );
