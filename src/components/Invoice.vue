@@ -90,15 +90,15 @@ function getPaidPDF() {
   paid_doc.html(paid, {
     callback: function (pdf) {
       // Add a hyperlink to the generated PDF
-      // pdf.textWithLink(
-      //   "HERE", // Text to display
-      //   185, // X coordinate
-      //   1016, // Y coordinate
-      //   {
-      //     url: "https://machan.store/tos.html", // URL to link
-      //     target: "_blank", // Open in a new tab
-      //   }
-      // );
+      pdf.textWithLink(
+        "HERE", // Text to display
+        185, // X coordinate
+        607, // Y coordinate
+        {
+          url: "https://machan.store/tos.html", // URL to link
+          target: "_blank", // Open in a new tab
+        }
+      );
       // pdf.textWithLink(
       //   "Visit", // Text to display
       //   650, // X coordinate
@@ -161,25 +161,15 @@ function formatDate(date) {
       </form>
       <div class="p-5 flex flex-col">
         <!-- Tab Start -->
-        <div
-          class="w-full grid grid-cols-2 gap-3 p-2 bg-gray-100 dark:bg-gray-700/50 rounded-lg"
-        >
-          <div
-            @click="active_tab = 1"
-            class="flex justify-center py-2 rounded-lg cursor-pointer"
-            :class="{
-              'bg-gray-300/50 dark:bg-gray-950/70': active_tab == 1,
-            }"
-          >
+        <div class="w-full grid grid-cols-2 gap-3 p-2 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
+          <div @click="active_tab = 1" class="flex justify-center py-2 rounded-lg cursor-pointer" :class="{
+            'bg-gray-300/50 dark:bg-gray-950/70': active_tab == 1,
+          }">
             Unpaid Invoice
           </div>
-          <div
-            @click="active_tab = 2"
-            class="flex justify-center py-2 rounded-lg cursor-pointer"
-            :class="{
-              'bg-gray-300/50 dark:bg-gray-950/70': active_tab == 2,
-            }"
-          >
+          <div @click="active_tab = 2" class="flex justify-center py-2 rounded-lg cursor-pointer" :class="{
+            'bg-gray-300/50 dark:bg-gray-950/70': active_tab == 2,
+          }">
             Paid Invoice
           </div>
         </div>
